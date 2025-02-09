@@ -1,0 +1,8 @@
+@model MyFirstMvcApp.Models.Dog
+
+<h1>Dog Details</h1>
+<div>
+    <h2>@Model.Name</h2>
+    <p>Breed: @Model.Breed</p>
+    <p>Date of Birth: @Model.DateOfBirth.ToShortDateString()</p>
+</div>

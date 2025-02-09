@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyFirstMvcApp</name>
+    </assembly>
+    <members>
+        <member name="M:MyFirstMvcApp.Controllers.DogController.GetDogs">
+            <summary>
+            Retrieves all dogs.
+            </summary>
+        </member>
+        <member name="M:MyFirstMvcApp.Controllers.SendController.GetSends">
+            <summary>
+            Retrieves all sends.
+            </summary>
+        </member>
+        <member name="M:MyFirstMvcApp.Controllers.TrainingController.GetTrainings">
+            <summary>
+            Retrieves all trainings.
+            </summary>
+        </member>
+        <member name="M:MyFirstMvcApp.Controllers.TrainingProgramController.GetTrainingPrograms">
+            <summary>
+            Retrieves all training programs.
+            </summary>
+        </member>
+        <member name="T:MyFirstMvcApp.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
