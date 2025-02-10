@@ -1,10 +1,9 @@
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using MyFirstMvcApp.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using MyFirstMvcApp.Models;
+using MyFirstMvcApp.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +13,6 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllersWithViews();
-
-
-// Register the Swagger generator
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "NoseWorks", Version = "v1" });
@@ -39,45 +35,29 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 builder.Services.AddLogging(options =>
 {
     options.AddConsole();
     options.AddDebug();
 });
 
-
 var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NoseWorks v1"));
 }
 
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "NoseWorks");
-    c.RoutePrefix = string.Empty;  // To serve the Swagger UI at the app's root (http://localhost:5000/)
-});
-
 app.UseHttpsRedirection();
+app.UseStaticFiles(); // Ensure this line is present to serve static files
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseRouting();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
 app.Run();
-

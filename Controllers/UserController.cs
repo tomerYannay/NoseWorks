@@ -4,6 +4,8 @@ using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using MyFirstMvcApp.Services;
+
 
 namespace MyFirstMvcApp.Controllers
 {
@@ -13,46 +15,113 @@ namespace MyFirstMvcApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IEmailSender _emailSender;
 
-
-        public UserController(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
+        public UserController(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, UserManager<IdentityUser> userManager, IEmailSender emailSender)
         {
             _context = context;
             _passwordHasher = passwordHasher;
+            _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         // POST: api/User/Register
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(User user)
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            user.Password = _passwordHasher.HashPassword(user, user.Password);
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
         }
 
         // POST: api/User/Login
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = _context.Users.SingleOrDefault(u => u.Email == loginModel.Email);
-            if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginModel.Password) != PasswordVerificationResult.Success)
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+
+            if (result.Succeeded)
             {
-                return Unauthorized("Invalid email or password.");
+                return Ok("Login successful.");
             }
 
-            // Generate a token or session here (not implemented in this example)
-            return Ok("Login successful.");
+            if (result.IsLockedOut)
+            {
+                return BadRequest("User account locked out.");
+            }
+
+            return Unauthorized("Invalid login attempt.");
+        }
+
+        // POST: api/User/ForgotPassword
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var resetLink = Url.Action("ResetPassword", "User", new { token, email = user.Email }, Request.Scheme);
+
+            // Send email
+            await _emailSender.SendEmailAsync(user.Email, "Reset Password", $"Please reset your password by clicking here: {resetLink}");
+
+            return Ok("Password reset link has been sent to your email.");
+        }
+
+        // POST: api/User/ResetPassword
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok("Password has been reset successfully.");
         }
 
         // GET: api/User
