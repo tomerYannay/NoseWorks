@@ -36,6 +36,25 @@ namespace MyFirstMvcApp.Controllers
             return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
 
+        // POST: api/User/Login
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = _context.Users.SingleOrDefault(u => u.Email == loginModel.Email);
+            if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginModel.Password) != PasswordVerificationResult.Success)
+            {
+                return Unauthorized("Invalid email or password.");
+            }
+
+            // Generate a token or session here (not implemented in this example)
+            return Ok("Login successful.");
+        }
+
         // GET: api/User
         [HttpGet]
         public IActionResult GetUsers()
