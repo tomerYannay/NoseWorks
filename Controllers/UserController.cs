@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Models;
@@ -11,11 +12,28 @@ namespace MyFirstMvcApp.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
 
-        public UserController(ApplicationDbContext context)
+        public UserController(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
+            _passwordHasher = passwordHasher;
+        }
+
+        // POST: api/User/Register
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            user.Password = _passwordHasher.HashPassword(user, user.Password);
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
 
         // GET: api/User
@@ -75,5 +93,6 @@ namespace MyFirstMvcApp.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
     }
 }

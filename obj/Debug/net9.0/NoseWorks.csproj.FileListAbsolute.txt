@@ -1,10 +1,10 @@
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/appsettings.Development.json
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/appsettings.json
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/NoseWorks.staticwebassets.runtime.json
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/NoseWorks.staticwebassets.endpoints.json
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/xunit.runner.reporters.netcoreapp10.dll
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/xunit.runner.utility.netcoreapp10.dll
-/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/NoseWorks.staticwebassets.runtime.json
-/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/NoseWorks.staticwebassets.endpoints.json
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/NoseWorks
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/NoseWorks.deps.json
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/NoseWorks.runtimeconfig.json
@@ -119,6 +119,7 @@
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/NoseWorks.MvcApplicationPartsAssemblyInfo.cache
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/NoseWorks.RazorAssemblyInfo.cache
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/NoseWorks.RazorAssemblyInfo.cs
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/NoseWorks.sourcelink.json
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/scopedcss/bundle/NoseWorks.styles.css
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/scopedcss/projectbundle/NoseWorks.bundle.scp.css
@@ -246,8 +247,8 @@
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/it2sci0iaa-muycvpuwrr.gz
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/8tuie0z02l-87fc7y1x7t.gz
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/nu92r5ejh4-mlv21k5csn.gz
-/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/f40ifcbmpc-0kazzndgzw.gz
-/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/6ejk9fd8za-0kazzndgzw.gz
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/f40ifcbmpc-kj9pmt8ojl.gz
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/6ejk9fd8za-kj9pmt8ojl.gz
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/staticwebassets.build.json
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/staticwebassets.development.json
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/staticwebassets.build.endpoints.json
