@@ -36,5 +36,17 @@
         <member name="M:MyFirstMvcApp.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:MyFirstMvcApp.Migrations.NewMigrationName">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.NewMigrationName.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.NewMigrationName.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.NewMigrationName.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

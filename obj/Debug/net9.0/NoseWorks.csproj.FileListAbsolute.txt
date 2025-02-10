@@ -265,3 +265,4 @@
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/NoseWorks.pdb
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/NoseWorks.genruntimeconfig.cache
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/ref/NoseWorks.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/qa3c9s1ad1-8vu7lh9l70.gz

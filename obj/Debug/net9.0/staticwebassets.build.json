@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WJyXdu8UznWcKMDeyzFfBwazJG5x4Kk5o9CzWK3XE8E=",
+  "Hash": "THtZfozcRbiXYUWRErCviVrmKBnUe+DWEt6cRv9ROSE=",
   "Source": "NoseWorks",
   "BasePath": "_content/NoseWorks",
   "Mode": "Default",
@@ -3251,6 +3251,27 @@
       "OriginalItemSpec": "/Users/shimonyannay/.nuget/packages/microsoft.aspnetcore.identity.ui/9.0.1/staticwebassets/V5/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"
     },
     {
+      "Identity": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/qa3c9s1ad1-8vu7lh9l70.gz",
+      "SourceId": "NoseWorks",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/",
+      "BasePath": "_content/NoseWorks",
+      "RelativePath": "index#[.{fingerprint=8vu7lh9l70}]?.html.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/wwwroot/index.html",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "cobsp2hkg4",
+      "Integrity": "5MQ4Qa0tl1C3Tmx+AS+3ChL2Kxyrsla2DrIk3TZaeiY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/wwwroot/index.html"
+    },
+    {
       "Identity": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/qfr28sqcy1-ft3s53vfgj.gz",
       "SourceId": "Microsoft.AspNetCore.Identity.UI",
       "SourceType": "Package",
@@ -4068,6 +4089,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/favicon.ico"
+    },
+    {
+      "Identity": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/wwwroot/index.html",
+      "SourceId": "NoseWorks",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/wwwroot/",
+      "BasePath": "_content/NoseWorks",
+      "RelativePath": "index#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "8vu7lh9l70",
+      "Integrity": "/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/index.html"
     },
     {
       "Identity": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/wwwroot/js/site.js",
@@ -14550,6 +14592,304 @@
         {
           "Name": "integrity",
           "Value": "sha256-F1wMlgb/juW08DFUssW6Pm9EBKfjXXRiSK0F5FgXxJU="
+        }
+      ]
+    },
+    {
+      "Route": "index.8vu7lh9l70.html",
+      "AssetFile": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/qa3c9s1ad1-8vu7lh9l70.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.004926108374"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "202"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5MQ4Qa0tl1C3Tmx+AS+3ChL2Kxyrsla2DrIk3TZaeiY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 10 Feb 2025 23:11:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8vu7lh9l70"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc="
+        }
+      ]
+    },
+    {
+      "Route": "index.8vu7lh9l70.html",
+      "AssetFile": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/wwwroot/index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 10 Feb 2025 23:11:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8vu7lh9l70"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc="
+        }
+      ]
+    },
+    {
+      "Route": "index.8vu7lh9l70.html.gz",
+      "AssetFile": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/qa3c9s1ad1-8vu7lh9l70.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "202"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5MQ4Qa0tl1C3Tmx+AS+3ChL2Kxyrsla2DrIk3TZaeiY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 10 Feb 2025 23:11:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8vu7lh9l70"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5MQ4Qa0tl1C3Tmx+AS+3ChL2Kxyrsla2DrIk3TZaeiY="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/qa3c9s1ad1-8vu7lh9l70.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.004926108374"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "202"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5MQ4Qa0tl1C3Tmx+AS+3ChL2Kxyrsla2DrIk3TZaeiY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 10 Feb 2025 23:11:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/wwwroot/index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 10 Feb 2025 23:11:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/H5hpiSzA5WSymXNlo5TWNW0EDAZHN5ZiP46npaXkyc="
+        }
+      ]
+    },
+    {
+      "Route": "index.html.gz",
+      "AssetFile": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/compressed/qa3c9s1ad1-8vu7lh9l70.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "202"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5MQ4Qa0tl1C3Tmx+AS+3ChL2Kxyrsla2DrIk3TZaeiY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 10 Feb 2025 23:11:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5MQ4Qa0tl1C3Tmx+AS+3ChL2Kxyrsla2DrIk3TZaeiY="
         }
       ]
     },
@@ -34797,7 +35137,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -34850,7 +35190,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -34887,7 +35227,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -34934,7 +35274,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -34995,7 +35335,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -35040,7 +35380,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -35095,7 +35435,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -35156,7 +35496,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -35201,7 +35541,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -35256,7 +35596,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -35309,7 +35649,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -35346,7 +35686,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 10 Feb 2025 13:45:10 GMT"
+          "Value": "Mon, 10 Feb 2025 22:59:34 GMT"
         },
         {
           "Name": "Cache-Control",
