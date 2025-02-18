@@ -5,7 +5,8 @@ using MyFirstMvcApp.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using MyFirstMvcApp.Services;
-
+using Microsoft.Extensions.Logging;
+using AutoMapper;
 
 namespace MyFirstMvcApp.Controllers
 {
@@ -18,13 +19,17 @@ namespace MyFirstMvcApp.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, UserManager<IdentityUser> userManager, IEmailSender emailSender)
+        public UserController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailSender emailSender, IMapper mapper, ILogger<UserController> logger)
         {
             _context = context;
-            _passwordHasher = passwordHasher;
             _userManager = userManager;
+            _signInManager = signInManager;
             _emailSender = emailSender;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         // POST: api/User/Register
@@ -41,6 +46,12 @@ namespace MyFirstMvcApp.Controllers
 
             if (result.Succeeded)
             {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token }, Request.Scheme);
+
+                // Send email
+                await _emailSender.SendEmailAsync(user.Email, "Confirm your email", $"Please confirm your email by clicking here: {confirmationLink}");
+
                 return CreatedAtAction("GetUser", new { id = user.Id }, user);
             }
 
@@ -52,27 +63,69 @@ namespace MyFirstMvcApp.Controllers
             return BadRequest(ModelState);
         }
 
+
+        // GET: api/User/ConfirmEmail
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return BadRequest("Invalid email confirmation request.");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                return Ok("Email confirmed successfully.");
+            }
+
+            return BadRequest("Email confirmation failed.");
+        }
+
         // POST: api/User/Login
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogError("Model state is invalid.");
                 return BadRequest(ModelState);
+            }
+
+            if (model == null)
+            {
+                _logger.LogError("Login model is null.");
+                return BadRequest("Invalid login request.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                _logger.LogError("User not found.");
+                return BadRequest("User not found.");
             }
 
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
+                _logger.LogInformation("Login successful.");
                 return Ok("Login successful.");
             }
 
             if (result.IsLockedOut)
             {
+                _logger.LogWarning("User account locked out.");
                 return BadRequest("User account locked out.");
             }
 
+            _logger.LogWarning("Invalid login attempt. Reason: {Reason}", result.ToString());
             return Unauthorized("Invalid login attempt.");
         }
 

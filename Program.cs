@@ -4,6 +4,9 @@ using MyFirstMvcApp.Models;
 using MyFirstMvcApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using MyFirstMvcApp.Profiles;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 
 builder.Services.AddLogging(options =>
 {
