@@ -17,7 +17,7 @@ namespace MyFirstMvcApp.Models{
         public int NegativeLocation { get; set; }  // מיקום שלילי (1-3)
 
         [Required]
-        public virtual ICollection<Training> Trainings { get; set; }  // קשר לאימונים
+        public virtual ICollection<Session> Sessions { get; set; }  // קשר לאימונים
     }
     
 }
