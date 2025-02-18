@@ -23,7 +23,7 @@ namespace MyFirstMvcApp.Models{
         public List<string> Results { get; set; }
 
         [Required]
-        public virtual Training Training { get; set; }
+        public virtual Session Session { get; set; }
     }
     
 }

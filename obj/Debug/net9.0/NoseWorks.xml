@@ -14,9 +14,29 @@
             Retrieves all sends.
             </summary>
         </member>
-        <member name="M:MyFirstMvcApp.Controllers.TrainingController.GetTrainings">
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.GetSessions">
             <summary>
-            Retrieves all trainings.
+            Retrieves all sessions.
+            </summary>
+        </member>
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.GetSession(System.Int32)">
+            <summary>
+            Retrieves a specific session by ID.
+            </summary>
+        </member>
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.CreateTraining(MyFirstMvcApp.Models.Session)">
+            <summary>
+            Creates a new session.
+            </summary>
+        </member>
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.UpdateSession(System.Int32,MyFirstMvcApp.Models.Session)">
+            <summary>
+            Updates an existing session.
+            </summary>
+        </member>
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.DeleteSession(System.Int32)">
+            <summary>
+            Deletes a specific session by ID.
             </summary>
         </member>
         <member name="M:MyFirstMvcApp.Controllers.TrainingProgramController.GetTrainingPrograms">
@@ -46,6 +66,18 @@
             <inheritdoc />
         </member>
         <member name="M:MyFirstMvcApp.Migrations.NewMigrationName.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:MyFirstMvcApp.Migrations.RenameTrainingToSession">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.RenameTrainingToSession.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.RenameTrainingToSession.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.RenameTrainingToSession.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>
