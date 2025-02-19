@@ -269,3 +269,11 @@
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/Newtonsoft.Json.dll
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/AutoMapper.dll
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
