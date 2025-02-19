@@ -235,5 +235,16 @@ namespace MyFirstMvcApp.Controllers
             return NoContent();
         }
 
+        // POST: api/User/Logout
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            // Sign out the user from the application
+            await _signInManager.SignOutAsync();
+
+            return Ok("User logged out successfully.");
+        }
+
+
     }
 }

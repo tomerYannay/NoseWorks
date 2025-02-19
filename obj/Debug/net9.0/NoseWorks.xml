@@ -4,11 +4,6 @@
         <name>NoseWorks</name>
     </assembly>
     <members>
-        <member name="M:MyFirstMvcApp.Controllers.DogController.GetDogs">
-            <summary>
-            Retrieves all dogs.
-            </summary>
-        </member>
         <member name="M:MyFirstMvcApp.Controllers.SendController.GetSends">
             <summary>
             Retrieves all sends.
@@ -78,6 +73,18 @@
             <inheritdoc />
         </member>
         <member name="M:MyFirstMvcApp.Migrations.RenameTrainingToSession.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:MyFirstMvcApp.Migrations.AddDogEntity">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.AddDogEntity.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.AddDogEntity.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MyFirstMvcApp.Migrations.AddDogEntity.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>
