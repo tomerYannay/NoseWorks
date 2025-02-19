@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Models;
-using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyFirstMvcApp.Controllers
 {
@@ -9,26 +11,26 @@ namespace MyFirstMvcApp.Controllers
     [ApiController]
     public class DogController : ControllerBase
     {
-        private static List<Dog> dogs = new List<Dog>
+        private readonly ApplicationDbContext _context;
+
+        public DogController(ApplicationDbContext context)
         {
-            new Dog { Id = 1, Name = "Buddy", Breed = "Golden Retriever", DateOfBirth = new DateTime(2018, 1, 1) },
-            new Dog { Id = 2, Name = "Charlie", Breed = "Labrador", DateOfBirth = new DateTime(2019, 5, 21) }
-        };
+            _context = context;
+        }
 
-
-        /// <summary>
-        /// Retrieves all dogs.
-        /// </summary>
+        // GET: api/Dog
         [HttpGet]
-        public IActionResult GetDogs()
+        public async Task<IActionResult> GetDogs()
         {
+            var dogs = await _context.Dogs.ToListAsync();
             return Ok(dogs);
         }
 
+        // GET: api/Dog/5
         [HttpGet("{id}")]
-        public IActionResult GetDog(int id)
+        public async Task<IActionResult> GetDog(int id)
         {
-            var dog = dogs.Find(d => d.Id == id);
+            var dog = await _context.Dogs.FindAsync(id);
             if (dog == null)
             {
                 return NotFound();
@@ -36,37 +38,51 @@ namespace MyFirstMvcApp.Controllers
             return Ok(dog);
         }
 
+        // POST: api/Dog
         [HttpPost]
-        public IActionResult AddDog([FromBody] Dog dog)
+        public async Task<IActionResult> CreateDog([FromBody] Dog dog)
         {
-            dogs.Add(dog);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Dogs.Add(dog);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetDog), new { id = dog.Id }, dog);
         }
 
+        // PUT: api/Dog/5
         [HttpPut("{id}")]
-        public IActionResult UpdateDog(int id, [FromBody] Dog updatedDog)
+        public async Task<IActionResult> UpdateDog(int id, [FromBody] Dog dog)
         {
-            var dog = dogs.Find(d => d.Id == id);
-            if (dog == null)
+            if (id != dog.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
-            dog.Id = updatedDog.Id;
-            dog.Name = updatedDog.Name;
-            dog.Breed = updatedDog.Breed;
-            dog.DateOfBirth = updatedDog.DateOfBirth;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Entry(dog).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
+        // DELETE: api/Dog/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteDog(int id)
+        public async Task<IActionResult> DeleteDog(int id)
         {
-            var dog = dogs.Find(d => d.Id == id);
+            var dog = await _context.Dogs.FindAsync(id);
             if (dog == null)
             {
                 return NotFound();
             }
-            dogs.Remove(dog);
+
+            _context.Dogs.Remove(dog);
+            await _context.SaveChangesAsync();
             return NoContent();
         }
     }
