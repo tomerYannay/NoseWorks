@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Models;
 using System;
@@ -11,6 +12,7 @@ namespace MyFirstMvcApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SessionController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -48,7 +50,7 @@ namespace MyFirstMvcApp.Controllers
         /// Creates a new session.
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CreateTraining([FromBody] Session session)
+        public async Task<IActionResult> CreateSession([FromBody] Session session)
         {
             if (!ModelState.IsValid)
             {

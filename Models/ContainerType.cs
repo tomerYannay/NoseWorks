@@ -2,7 +2,7 @@ namespace MyFirstMvcApp.Models
 {
     public enum ContainerType
     {
-        PositiveControl,
-        PositiveNegativeControl
+        PositiveControl = 0,
+        PositiveNegativeControl = 1
     }
 }

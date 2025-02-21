@@ -11,8 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 // Explicitly retrieve environment variables and build the connection string
-string postgresUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
-string postgresPassword = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+string postgresUser = "tomer_yannay";
+string postgresPassword = "Apple2020";
 string postgresHost = "localhost"; // Adjust if needed
 string postgresDatabase = "NoseWorks"; // Adjust to match your DB name
 
@@ -30,7 +30,31 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "NoseWorks", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
 });
+
 
 builder.Services.AddAuthentication(options =>
 {
@@ -71,22 +95,36 @@ builder.Services.AddLogging(options =>
     options.AddDebug();
 });
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NoseWorks v1"));
+    app.UseSwaggerUI(c => 
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "NoseWorks v1");
+    });
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles(); // Ensure this line is present to serve static files
-
-app.UseAuthorization();
 app.UseAuthentication();
-
+app.UseAuthorization();
+app.UseCors(); // Enable CORS
 app.MapControllers();
 
 app.Run();

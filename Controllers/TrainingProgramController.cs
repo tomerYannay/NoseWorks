@@ -1,70 +1,112 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Models;
-using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyFirstMvcApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // Apply authorization to the entire controller
     public class TrainingProgramController : ControllerBase
     {
-        private static List<TrainingProgram> trainingPrograms = new List<TrainingProgram>
-        {
-            new TrainingProgram { Id = 1, SendNumber = 5, PositiveLocation = 1, NegativeLocation = 3 },
-            new TrainingProgram { Id = 2, SendNumber = 3, PositiveLocation = 2, NegativeLocation = 1 }
-        };
+        private readonly ApplicationDbContext _context;
 
-        /// <summary>
-        /// Retrieves all training programs.
-        /// </summary>
-        [HttpGet]
-        public IActionResult GetTrainingPrograms()
+        public TrainingProgramController(ApplicationDbContext context)
         {
+            _context = context;
+        }
+
+        // GET: api/TrainingProgram
+        [HttpGet]
+        public async Task<IActionResult> GetTrainingPrograms()
+        {
+            var trainingPrograms = await _context.TrainingPrograms.Include(tp => tp.SessionId).ToListAsync();
             return Ok(trainingPrograms);
         }
 
+        // GET: api/TrainingProgram/5
         [HttpGet("{id}")]
-        public IActionResult GetTrainingProgram(int id)
+        public async Task<IActionResult> GetTrainingProgram(int id)
         {
-            var program = trainingPrograms.Find(tp => tp.Id == id);
-            if (program == null)
+            var trainingProgram = await _context.TrainingPrograms.FirstOrDefaultAsync(tp => tp.Id == id);
+            if (trainingProgram == null)
             {
                 return NotFound();
             }
-            return Ok(program);
+            return Ok(trainingProgram);
         }
 
+        // POST: api/TrainingProgram
         [HttpPost]
-        public IActionResult AddTrainingProgram([FromBody] TrainingProgram program)
+        public async Task<IActionResult> AddTrainingProgram([FromBody] TrainingProgram program)
         {
-            trainingPrograms.Add(program);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var session = await _context.Sessions.FindAsync(program.SessionId);
+            if (session == null)
+            {
+                return BadRequest("Session not found.");
+            }
+
+            if (program.SendNumber < 0 || program.SendNumber > session.NumberOfSends)
+            {
+                return BadRequest($"SendNumber must be between 0 and {session.NumberOfSends}.");
+            }
+
+            _context.TrainingPrograms.Add(program);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetTrainingProgram), new { id = program.Id }, program);
         }
 
+        // PUT: api/TrainingProgram/5
         [HttpPut("{id}")]
-        public IActionResult UpdateTrainingProgram(int id, [FromBody] TrainingProgram updatedProgram)
+        public async Task<IActionResult> UpdateTrainingProgram(int id, [FromBody] TrainingProgram updatedProgram)
         {
-            var program = trainingPrograms.Find(tp => tp.Id == id);
-            if (program == null)
+            if (id != updatedProgram.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
-            program.SendNumber = updatedProgram.SendNumber;
-            program.PositiveLocation = updatedProgram.PositiveLocation;
-            program.NegativeLocation = updatedProgram.NegativeLocation;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var session = await _context.Sessions.FindAsync(updatedProgram.SessionId);
+            if (session == null)
+            {
+                return BadRequest("Session not found.");
+            }
+
+            if (updatedProgram.SendNumber < 0 || updatedProgram.SendNumber > session.NumberOfSends)
+            {
+                return BadRequest($"SendNumber must be between 0 and {session.NumberOfSends}.");
+            }
+
+            _context.Entry(updatedProgram).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
+        // DELETE: api/TrainingProgram/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteTrainingProgram(int id)
+        public async Task<IActionResult> DeleteTrainingProgram(int id)
         {
-            var program = trainingPrograms.Find(tp => tp.Id == id);
-            if (program == null)
+            var trainingProgram = await _context.TrainingPrograms.FindAsync(id);
+            if (trainingProgram == null)
             {
                 return NotFound();
             }
-            trainingPrograms.Remove(program);
+
+            _context.TrainingPrograms.Remove(trainingProgram);
+            await _context.SaveChangesAsync();
             return NoContent();
         }
     }

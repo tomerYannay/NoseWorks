@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Models;
-using System.Linq;
-using System.Threading.Tasks;
 using MyFirstMvcApp.Services;
-using Microsoft.Extensions.Logging;
-using AutoMapper;
+using System;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
-
+using System.Threading.Tasks;
+using AutoMapper;
 
 namespace MyFirstMvcApp.Controllers
 {
@@ -28,16 +28,24 @@ namespace MyFirstMvcApp.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailSender emailSender, IMapper mapper, ILogger<UserController> logger, IConfiguration configuration)
+        public UserController(
+            ApplicationDbContext context,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IEmailSender emailSender,
+            IMapper mapper,
+            ILogger<UserController> logger,
+            IConfiguration configuration,
+            IPasswordHasher<User> passwordHasher)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _passwordHasher = passwordHasher;
             _mapper = mapper;
             _logger = logger;
             _configuration = configuration;
-
         }
 
         // POST: api/User/Register
@@ -96,7 +104,7 @@ namespace MyFirstMvcApp.Controllers
             return BadRequest("Email confirmation failed.");
         }
 
-         // POST: api/User/Login
+        // POST: api/User/Login
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
@@ -106,32 +114,42 @@ namespace MyFirstMvcApp.Controllers
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user == null)
             {
                 return Unauthorized("Invalid login attempt.");
             }
 
-            var authClaims = new[]
+            var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+            if (!result.Succeeded)
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                _logger.LogWarning("Invalid login attempt. Reason: {Reason}", result.ToString());
+                return Unauthorized("Invalid login attempt.");
+            }
+
+            var token = GenerateJwtToken(user);
+
+            return Ok(new { Token = token });
+        }
+
+        private string GenerateJwtToken(IdentityUser user)
+        {
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
-                expires: DateTime.Now.AddHours(3),
-                claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-            );
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
 
-            return Ok(new
-            {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo
-            });
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         // POST: api/User/ForgotPassword
@@ -167,13 +185,13 @@ namespace MyFirstMvcApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByIdAsync(model.UserId);
             if (user == null)
             {
-                return BadRequest("User not found.");
+                return BadRequest("Invalid user ID.");
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
             if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
@@ -238,16 +256,6 @@ namespace MyFirstMvcApp.Controllers
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return NoContent();
-        }
-
-        // POST: api/User/Logout
-        [HttpPost("Logout")]
-        public async Task<IActionResult> Logout()
-        {
-            // Sign out the user from the application
-            await _signInManager.SignOutAsync();
-
-            return Ok("User logged out successfully.");
         }
 
     }

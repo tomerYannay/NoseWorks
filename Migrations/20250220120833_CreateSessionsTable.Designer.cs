@@ -10,11 +10,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace MyFirstMvcApp.Migrations
+namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250218135646_RenameTrainingToSession")]
-    partial class RenameTrainingToSession
+    [Migration("20250220120833_CreateSessionsTable")]
+    partial class CreateSessionsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,6 +226,30 @@ namespace MyFirstMvcApp.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MyFirstMvcApp.Models.Dog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Breed")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Dogs");
+                });
+
             modelBuilder.Entity("MyFirstMvcApp.Models.Session", b =>
                 {
                     b.Property<int>("Id")
@@ -234,9 +258,8 @@ namespace MyFirstMvcApp.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ContainerType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("ContainerType")
+                        .HasColumnType("integer");
 
                     b.Property<float>("DPrimeScore")
                         .HasColumnType("real");
