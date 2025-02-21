@@ -1,16 +1,17 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace MyFirstMvcApp.Models{
+namespace MyFirstMvcApp.Models
+{
 
-        public class Session
+    public class Session
     {
         public int Id { get; set; }
         public int DogId { get; set; }
         public string Trainer { get; set; }
         public DateTime Date { get; set; }
-
 
         [Required]
         public int NumberOfSends { get; set; } = 10;
@@ -19,15 +20,9 @@ namespace MyFirstMvcApp.Models{
         public ContainerType ContainerType { get; set; }
         
         public bool SendX { get; set; }
-        public int TrainingProgramId { get; set; }
-        public List<string> FinalResults { get; set; }
-        public float DPrimeScore { get; set; }
 
-        // Constructor to initialize default values
-        public Session()
-        {
-            NumberOfSends = 10;
-        }
+        public List<string> FinalResults { get; set; } = new List<string>();
+
+        public float DPrimeScore { get; set; }
     }
-        
 }

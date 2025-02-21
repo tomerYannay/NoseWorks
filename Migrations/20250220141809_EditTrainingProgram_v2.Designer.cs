@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFirstMvcApp.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250220141809_EditTrainingProgram_v2")]
+    partial class EditTrainingProgram_v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -281,7 +284,15 @@ namespace NoseWorks.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("TrainingProgramId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TrainingProgramId1")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TrainingProgramId1");
 
                     b.ToTable("Sessions");
                 });
@@ -391,6 +402,17 @@ namespace NoseWorks.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MyFirstMvcApp.Models.Session", b =>
+                {
+                    b.HasOne("MyFirstMvcApp.Models.TrainingProgram", "TrainingProgram")
+                        .WithMany()
+                        .HasForeignKey("TrainingProgramId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TrainingProgram");
                 });
 #pragma warning restore 612, 618
         }

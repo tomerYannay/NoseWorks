@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Models;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ namespace MyFirstMvcApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DogController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

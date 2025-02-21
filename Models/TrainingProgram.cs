@@ -8,16 +8,19 @@ namespace MyFirstMvcApp.Models{
         public int Id { get; set; }  // מזהה
 
         [Required]
-        public int SendNumber { get; set; }  // מספר שליחות
+        public int SendNumber { get; set; }  // מספר שליחה
 
         [Required]
-        public int PositiveLocation { get; set; }  // מיקום חיובי (1-3)
+        [Range(0, 3, ErrorMessage = "PositiveLocation must be between 0 and 3.")]
+        public int PositiveLocation { get; set; }  // מיקום חיובי (0-3)
 
         [Required]
-        public int NegativeLocation { get; set; }  // מיקום שלילי (1-3)
+        [Range(0, 3, ErrorMessage = "NegativeLocation must be between 0 and 3.")]
+        public int NegativeLocation { get; set; }  // מיקום שלילי (0-3)
 
         [Required]
-        public virtual ICollection<Session> Sessions { get; set; }  // קשר לאימונים
+        public int SessionId { get; set; }
+
     }
     
 }

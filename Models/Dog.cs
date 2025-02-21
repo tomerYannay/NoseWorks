@@ -12,6 +12,7 @@ namespace MyFirstMvcApp.Models{
         public string Breed {get; set; }
         [Required]
         public DateTime DateOfBirth {get; set; }
+
     }
     
 }

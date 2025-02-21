@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using MyFirstMvcApp.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ namespace MyFirstMvcApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SendController : ControllerBase
     {
         private static List<Send> sends = new List<Send>
