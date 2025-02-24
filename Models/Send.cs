@@ -18,5 +18,4 @@ namespace MyFirstMvcApp.Models{
         [Required]
         public string Result { get; set; }
     }
-    
 }

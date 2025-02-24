@@ -53,6 +53,12 @@ namespace MyFirstMvcApp.Controllers
             var random = new Random();
             var trainingPrograms = new List<TrainingProgram>();
 
+            int specialSendNumber = -1;
+            if (session.SendX)
+            {
+                specialSendNumber = random.Next(session.NumberOfSends / 2, session.NumberOfSends);
+            }
+
             for (int i = 0; i < session.NumberOfSends; i++)
             {
                 var trainingProgram = new TrainingProgram
@@ -61,18 +67,25 @@ namespace MyFirstMvcApp.Controllers
                     SendNumber = i
                 };
 
-                if (session.ContainerType == ContainerType.PositiveControl)
+                if (i == specialSendNumber)
                 {
+                    trainingProgram.PositiveLocation = 0;
                     trainingProgram.NegativeLocation = 0;
-                    trainingProgram.PositiveLocation = random.Next(1, 4); // 1, 2, or 3
                 }
-                else if (session.ContainerType == ContainerType.PositiveNegativeControl)
-                {
-                    do
+                else{
+                    if (session.ContainerType == ContainerType.PositiveControl)
                     {
-                        trainingProgram.NegativeLocation = random.Next(1, 4); // 1, 2, or 3
+                        trainingProgram.NegativeLocation = 0;
                         trainingProgram.PositiveLocation = random.Next(1, 4); // 1, 2, or 3
-                    } while (trainingProgram.NegativeLocation == trainingProgram.PositiveLocation);
+                    }
+                    else if (session.ContainerType == ContainerType.PositiveNegativeControl)
+                    {
+                        do
+                        {
+                            trainingProgram.NegativeLocation = random.Next(1, 4); // 1, 2, or 3
+                            trainingProgram.PositiveLocation = random.Next(1, 4); // 1, 2, or 3
+                        } while (trainingProgram.NegativeLocation == trainingProgram.PositiveLocation);
+                    }
                 }
 
                 trainingPrograms.Add(trainingProgram);

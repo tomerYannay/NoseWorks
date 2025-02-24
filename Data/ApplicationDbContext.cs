@@ -18,6 +18,5 @@ namespace MyFirstMvcApp.Data
         public DbSet<TrainingProgram> TrainingPrograms { get; set; }
         public DbSet<Send> Sends { get; set; } 
         
-        
     }
 }
