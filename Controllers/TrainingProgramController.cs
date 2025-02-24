@@ -40,6 +40,48 @@ namespace MyFirstMvcApp.Controllers
             return Ok(trainingProgram);
         }
 
+        // GET: api/TrainingProgram/Random/{sessionId}
+        [HttpGet("Random/{sessionId}")]
+        public async Task<IActionResult> GetRandomTrainingPrograms(int sessionId)
+        {
+            var session = await _context.Sessions.FindAsync(sessionId);
+            if (session == null)
+            {
+                return NotFound($"Session with ID {sessionId} not found.");
+            }
+
+            var random = new Random();
+            var trainingPrograms = new List<TrainingProgram>();
+
+            for (int i = 0; i < session.NumberOfSends; i++)
+            {
+                var trainingProgram = new TrainingProgram
+                {
+                    SessionId = sessionId,
+                    SendNumber = i
+                };
+
+                if (session.ContainerType == ContainerType.PositiveControl)
+                {
+                    trainingProgram.NegativeLocation = 0;
+                    trainingProgram.PositiveLocation = random.Next(1, 4); // 1, 2, or 3
+                }
+                else if (session.ContainerType == ContainerType.PositiveNegativeControl)
+                {
+                    do
+                    {
+                        trainingProgram.NegativeLocation = random.Next(1, 4); // 1, 2, or 3
+                        trainingProgram.PositiveLocation = random.Next(1, 4); // 1, 2, or 3
+                    } while (trainingProgram.NegativeLocation == trainingProgram.PositiveLocation);
+                }
+
+                trainingPrograms.Add(trainingProgram);
+            }
+
+            return Ok(trainingPrograms);
+        }
+
+
         // POST: api/TrainingProgram
         [HttpPost]
         public async Task<IActionResult> AddTrainingPrograms([FromBody] IEnumerable<TrainingProgram> programs)
