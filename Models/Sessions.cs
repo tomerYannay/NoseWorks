@@ -8,9 +8,13 @@ namespace MyFirstMvcApp.Models
 
     public class Session
     {
+        [Key]
         public int Id { get; set; }
+
         public int DogId { get; set; }
+
         public string Trainer { get; set; }
+        
         public DateTime Date { get; set; }
 
         [Required]

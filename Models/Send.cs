@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace MyFirstMvcApp.Models{
 
     public class Send{
-        [Required]
+        [Key]
         public int Id {get; set; }
         
         [Required]

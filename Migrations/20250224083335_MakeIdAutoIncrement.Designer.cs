@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250220125432_AddTrainingProgram")]
-    partial class AddTrainingProgram
+    [Migration("20250224083335_MakeIdAutoIncrement")]
+    partial class MakeIdAutoIncrement
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -284,15 +284,7 @@ namespace NoseWorks.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("TrainingProgramId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("DogId");
-
-                    b.HasIndex("TrainingProgramId")
-                        .IsUnique();
 
                     b.ToTable("Sessions");
                 });
@@ -312,6 +304,9 @@ namespace NoseWorks.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("SendNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SessionId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -398,31 +393,6 @@ namespace NoseWorks.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MyFirstMvcApp.Models.Session", b =>
-                {
-                    b.HasOne("MyFirstMvcApp.Models.Dog", "Dog")
-                        .WithMany()
-                        .HasForeignKey("DogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyFirstMvcApp.Models.TrainingProgram", "TrainingProgram")
-                        .WithOne("Session")
-                        .HasForeignKey("MyFirstMvcApp.Models.Session", "TrainingProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dog");
-
-                    b.Navigation("TrainingProgram");
-                });
-
-            modelBuilder.Entity("MyFirstMvcApp.Models.TrainingProgram", b =>
-                {
-                    b.Navigation("Session")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

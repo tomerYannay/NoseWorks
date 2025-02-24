@@ -34,88 +34,16 @@
             Deletes a specific session by ID.
             </summary>
         </member>
-        <member name="T:NoseWorks.Migrations.CreateSessionsTable">
+        <member name="T:NoseWorks.Migrations.MakeIdAutoIncrement">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSessionsTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.MakeIdAutoIncrement.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSessionsTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.MakeIdAutoIncrement.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSessionsTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.AddDogToSessionRelationship">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddDogToSessionRelationship.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddDogToSessionRelationship.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddDogToSessionRelationship.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.EditDogWithoutSession">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditDogWithoutSession.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditDogWithoutSession.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditDogWithoutSession.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.AddTrainingProgram">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddTrainingProgram.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddTrainingProgram.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddTrainingProgram.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.EditTrainingProgram">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditTrainingProgram.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditTrainingProgram.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditTrainingProgram.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.EditTrainingProgram_v2">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditTrainingProgram_v2.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditTrainingProgram_v2.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditTrainingProgram_v2.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.EditSessionWithoutTrainingProgram">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditSessionWithoutTrainingProgram.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditSessionWithoutTrainingProgram.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.EditSessionWithoutTrainingProgram.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:NoseWorks.Migrations.MakeIdAutoIncrement.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

@@ -42,27 +42,56 @@ namespace MyFirstMvcApp.Controllers
 
         // POST: api/TrainingProgram
         [HttpPost]
-        public async Task<IActionResult> AddTrainingProgram([FromBody] TrainingProgram program)
+        public async Task<IActionResult> AddTrainingPrograms([FromBody] IEnumerable<TrainingProgram> programs)
         {
-            if (!ModelState.IsValid)
+            if (!programs.Any())
             {
-                return BadRequest(ModelState);
+                return BadRequest("No programs provided.");
             }
 
-            var session = await _context.Sessions.FindAsync(program.SessionId);
-            if (session == null)
+            foreach (var program in programs)
             {
-                return BadRequest("Session not found.");
+                if (!TryValidateModel(program))
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var session = await _context.Sessions.FindAsync(program.SessionId);
+                if (session == null)
+                {
+                    return BadRequest($"Session with ID {program.SessionId} not found.");
+                }
+
+                if (program.SendNumber < 0 || program.SendNumber > session.NumberOfSends)
+                {
+                    return BadRequest($"SendNumber for program {program.SendNumber} must be between 0 and {session.NumberOfSends}.");
+                }
+
+                if (program.PositiveLocation == program.NegativeLocation)
+                {
+                    return BadRequest("PositiveLocation and NegativeLocation cannot be the same.");
+                }
+
+                // Check for duplicates
+                var existingProgram = await _context.TrainingPrograms
+                    .FirstOrDefaultAsync(tp => tp.SessionId == program.SessionId && tp.SendNumber == program.SendNumber);
+                if (existingProgram != null)
+                {
+                    return BadRequest($"A training program with SessionId {program.SessionId} and SendNumber {program.SendNumber} already exists.");
+                }
+
+                // Add each program to the context
+                _context.TrainingPrograms.Add(program);
             }
 
-            if (program.SendNumber < 0 || program.SendNumber > session.NumberOfSends)
-            {
-                return BadRequest($"SendNumber must be between 0 and {session.NumberOfSends}.");
-            }
-
-            _context.TrainingPrograms.Add(program);
+            // Save all programs at once
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetTrainingProgram), new { id = program.Id }, program);
+
+            var addedPrograms = await _context.TrainingPrograms
+                .Where(tp => programs.Select(p => p.Id).Contains(tp.Id))
+                .ToListAsync();
+
+            return Ok(addedPrograms);
         }
 
         // PUT: api/TrainingProgram/5
