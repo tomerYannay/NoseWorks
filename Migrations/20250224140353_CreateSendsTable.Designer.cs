@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250224083335_MakeIdAutoIncrement")]
-    partial class MakeIdAutoIncrement
+    [Migration("20250224140353_CreateSendsTable")]
+    partial class CreateSendsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -248,6 +248,33 @@ namespace NoseWorks.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dogs");
+                });
+
+            modelBuilder.Entity("MyFirstMvcApp.Models.Send", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("SelectedLocation")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TargetScent")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TrainingId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sends");
                 });
 
             modelBuilder.Entity("MyFirstMvcApp.Models.Session", b =>

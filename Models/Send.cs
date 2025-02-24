@@ -11,19 +11,12 @@ namespace MyFirstMvcApp.Models{
         public int TrainingId {get; set; }
 
         [Required]
-        public int SelectedLocation { get; set; }  // מיקום נבחר
+        public int SelectedLocation { get; set; }  
+
+        public string TargetScent { get; set; }
 
         [Required]
         public string Result { get; set; }
-
-        [Required]
-        public List<int> Visits { get; set; }
-
-        [Required]
-        public List<string> Results { get; set; }
-
-        [Required]
-        public virtual Session Session { get; set; }
     }
     
 }

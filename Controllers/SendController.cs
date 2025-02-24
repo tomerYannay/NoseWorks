@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Models;
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyFirstMvcApp.Controllers
 {
@@ -11,25 +14,26 @@ namespace MyFirstMvcApp.Controllers
     [Authorize]
     public class SendController : ControllerBase
     {
-        private static List<Send> sends = new List<Send>
-        {
-            new Send { Id = 1, TrainingId = 1, SelectedLocation = 1, Result = "H", Visits = new List<int> { 1, 3, 2 }, Results = new List<string> { "H", "FA", "H" } },
-            new Send { Id = 2, TrainingId = 2, SelectedLocation = 2, Result = "CR", Visits = new List<int> { 2, 1, 3 }, Results = new List<string> { "H", "CR", "CR" } }
-        };
+        private readonly ApplicationDbContext _context;
 
-        /// <summary>
-        /// Retrieves all sends.
-        /// </summary>
-        [HttpGet]
-        public IActionResult GetSends()
+        public SendController(ApplicationDbContext context)
         {
+            _context = context;
+        }
+
+        // GET: api/Send
+        [HttpGet]
+        public async Task<IActionResult> GetSends()
+        {
+            var sends = await _context.Sends.ToListAsync();
             return Ok(sends);
         }
 
+        // GET: api/Send/5
         [HttpGet("{id}")]
-        public IActionResult GetSend(int id)
+        public async Task<IActionResult> GetSend(int id)
         {
-            var send = sends.Find(s => s.Id == id);
+            var send = await _context.Sends.FindAsync(id);
             if (send == null)
             {
                 return NotFound();
@@ -37,39 +41,121 @@ namespace MyFirstMvcApp.Controllers
             return Ok(send);
         }
 
+        // POST: api/Send
         [HttpPost]
-        public IActionResult AddSend([FromBody] Send send)
+        public async Task<IActionResult> AddSend([FromBody] Send send)
         {
-            sends.Add(send);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (send.SelectedLocation < 0 || send.SelectedLocation > 3)
+            {
+                return BadRequest("SelectedLocation must be between 0 and 3.");
+            }
+
+            var trainingProgram = await _context.TrainingPrograms.FindAsync(send.TrainingId);
+            if (trainingProgram == null)
+            {
+                return BadRequest($"TrainingProgram with ID {send.TrainingId} not found.");
+            }
+
+            var session = await _context.Sessions.FindAsync(trainingProgram.SessionId);
+            if (session == null)
+            {
+                return BadRequest($"Session with ID {trainingProgram.SessionId} not found.");
+            }
+
+            // Check for unique TrainingId
+            var existingSend = await _context.Sends.FirstOrDefaultAsync(s => s.TrainingId == send.TrainingId);
+            if (existingSend != null)
+            {
+                return BadRequest($"A send with TrainingId {send.TrainingId} already exists.");
+            }
+
+            // Calculate the Result attribute
+            send.Result = CalculateResult(send.SelectedLocation, trainingProgram.PositiveLocation, trainingProgram.NegativeLocation, session.ContainerType);
+
+            _context.Sends.Add(send);
+            await _context.SaveChangesAsync();
+
             return CreatedAtAction(nameof(GetSend), new { id = send.Id }, send);
         }
 
+        // PUT: api/Send/5
         [HttpPut("{id}")]
-        public IActionResult UpdateSend(int id, [FromBody] Send updatedSend)
+        public async Task<IActionResult> UpdateSend(int id, [FromBody] Send updatedSend)
         {
-            var send = sends.Find(s => s.Id == id);
-            if (send == null)
+            if (id != updatedSend.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
-            send.TrainingId = updatedSend.TrainingId;
-            send.SelectedLocation = updatedSend.SelectedLocation;
-            send.Result = updatedSend.Result;
-            send.Visits = updatedSend.Visits;
-            send.Results = updatedSend.Results;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var trainingProgram = await _context.TrainingPrograms.FindAsync(updatedSend.TrainingId);
+            if (trainingProgram == null)
+            {
+                return BadRequest($"TrainingProgram with ID {updatedSend.TrainingId} not found.");
+            }
+
+            var session = await _context.Sessions.FindAsync(trainingProgram.SessionId);
+            if (session == null)
+            {
+                return BadRequest($"Session with ID {trainingProgram.SessionId} not found.");
+            }
+
+            // Recalculate the Result attribute
+            updatedSend.Result = CalculateResult(updatedSend.SelectedLocation, trainingProgram.PositiveLocation, trainingProgram.NegativeLocation, session.ContainerType);
+
+            _context.Entry(updatedSend).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
+        // DELETE: api/Send/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteSend(int id)
+        public async Task<IActionResult> DeleteSend(int id)
         {
-            var send = sends.Find(s => s.Id == id);
+            var send = await _context.Sends.FindAsync(id);
             if (send == null)
             {
                 return NotFound();
             }
-            sends.Remove(send);
+
+            _context.Sends.Remove(send);
+            await _context.SaveChangesAsync();
             return NoContent();
+        }
+
+        private string CalculateResult(int selectedLocation, int positiveLocation, int negativeLocation, ContainerType containerType)
+        {
+            if (selectedLocation == positiveLocation)
+            {
+                return "H"; // Hit: Correct selection
+            }
+            else if (selectedLocation == negativeLocation)
+            {
+                // False Accept (FA): Incorrect selection of negative location (if ContainerType is 1)
+                if (containerType == ContainerType.PositiveNegativeControl)
+                {
+                    return "FA"; // False Accept (Incorrect selection of NegativeLocation)
+                }
+                else
+                {
+                    return "M"; // Miss if NegativeLocation is selected in PositiveControl (ContainerType 0)
+                }
+            }
+            else if (containerType == ContainerType.PositiveControl && (selectedLocation == 1 || selectedLocation == 2 || selectedLocation == 3))
+            {
+                return "CR"; // Correct Reject (CR): Any valid PositiveLocation (1, 2, 3) if ContainerType is 0
+            }
+
+            return "M"; // Default to Miss if none of the above conditions are met
         }
     }
 }
