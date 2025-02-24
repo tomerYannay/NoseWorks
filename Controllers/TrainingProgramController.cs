@@ -122,7 +122,7 @@ namespace MyFirstMvcApp.Controllers
                     return BadRequest($"SendNumber for program {program.SendNumber} must be between 0 and {session.NumberOfSends}.");
                 }
 
-                if (program.PositiveLocation == program.NegativeLocation)
+                if (program.PositiveLocation == program.NegativeLocation && program.PositiveLocation != 0)
                 {
                     return BadRequest("PositiveLocation and NegativeLocation cannot be the same.");
                 }
