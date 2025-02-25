@@ -24,7 +24,7 @@ namespace MyFirstMvcApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTrainingPrograms()
         {
-            var trainingPrograms = await _context.TrainingPrograms.Include(tp => tp.SessionId).ToListAsync();
+            var trainingPrograms = await _context.TrainingPrograms.ToListAsync();
             return Ok(trainingPrograms);
         }
 
@@ -38,6 +38,22 @@ namespace MyFirstMvcApp.Controllers
                 return NotFound();
             }
             return Ok(trainingProgram);
+        }
+
+        // GET: api/TrainingProgram/BySession/{sessionId}
+        [HttpGet("BySession/{sessionId}")]
+        public async Task<IActionResult> GetTrainingProgramsBySessionId(int sessionId)
+        {
+            var trainingPrograms = await _context.TrainingPrograms
+                .Where(tp => tp.SessionId == sessionId)
+                .ToListAsync();
+
+            if (trainingPrograms == null || !trainingPrograms.Any())
+            {
+                return NotFound($"No training programs found for session ID {sessionId}.");
+            }
+
+            return Ok(trainingPrograms);
         }
 
         // GET: api/TrainingProgram/Random/{sessionId}
