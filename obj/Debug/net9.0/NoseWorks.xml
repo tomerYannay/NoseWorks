@@ -41,5 +41,29 @@
         <member name="M:NoseWorks.Migrations.CreateSendsTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:NoseWorks.Migrations.RenameSendToTrialAndUpdateAttributes">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.RenameSendToTrialAndUpdateAttributes.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.RenameSendToTrialAndUpdateAttributes.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.RenameSendToTrialAndUpdateAttributes.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:NoseWorks.Migrations.AddVideoUrlToTrainingProgram">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrainingProgram.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrainingProgram.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrainingProgram.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

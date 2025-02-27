@@ -8,7 +8,7 @@ namespace MyFirstMvcApp.Models{
         public int Id { get; set; }  // מזהה
 
         [Required]
-        public int SendNumber { get; set; }  // מספר שליחה
+        public int TrialNumber { get; set; }  // מספר שליחה
 
         [Required]
         [Range(0, 3, ErrorMessage = "PositiveLocation must be between 0 and 3.")]
@@ -20,6 +20,8 @@ namespace MyFirstMvcApp.Models{
 
         [Required]
         public int SessionId { get; set; }
+
+        public string VideoUrl { get; set; }
 
     }
     

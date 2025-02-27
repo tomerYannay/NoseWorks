@@ -18,12 +18,12 @@ namespace MyFirstMvcApp.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public int NumberOfSends { get; set; } = 10;
+        public int NumberOfTrials { get; set; } = 10;
 
         [Required]
         public ContainerType ContainerType { get; set; }
         
-        public bool SendX { get; set; }
+        public bool TrialX { get; set; }
 
         public List<string> FinalResults { get; set; } = new List<string>();
 

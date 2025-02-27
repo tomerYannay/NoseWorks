@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFirstMvcApp.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250227131602_RenameSendToTrialAndUpdateAttributes")]
+    partial class RenameSendToTrialAndUpdateAttributes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -305,10 +308,6 @@ namespace NoseWorks.Migrations
 
                     b.Property<int>("TrialNumber")
                         .HasColumnType("integer");
-
-                    b.Property<string>("VideoUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

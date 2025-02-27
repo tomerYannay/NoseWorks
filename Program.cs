@@ -9,6 +9,14 @@ using MyFirstMvcApp.Profiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.S3;
+using DotNetEnv;
+
+
+// Load environment variables from .env file
+Env.Load();
+
 
 // Explicitly retrieve environment variables and build the connection string
 string postgresUser = "tomer_yannay";
@@ -105,6 +113,10 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+
+
+// Add AWS S3 service
+builder.Services.AddAWSService<IAmazonS3>();
 
 var app = builder.Build();
 

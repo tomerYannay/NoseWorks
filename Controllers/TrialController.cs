@@ -12,53 +12,53 @@ namespace MyFirstMvcApp.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class SendController : ControllerBase
+    public class TrialController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public SendController(ApplicationDbContext context)
+        public TrialController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Send
+        // GET: api/Trial
         [HttpGet]
-        public async Task<IActionResult> GetSends()
+        public async Task<IActionResult> GetTrials()
         {
-            var sends = await _context.Sends.ToListAsync();
-            return Ok(sends);
+            var trials = await _context.Trials.ToListAsync();
+            return Ok(trials);
         }
 
-        // GET: api/Send/5
+        // GET: api/Trial/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSend(int id)
+        public async Task<IActionResult> GetTrial(int id)
         {
-            var send = await _context.Sends.FindAsync(id);
-            if (send == null)
+            var trial = await _context.Trials.FindAsync(id);
+            if (trial == null)
             {
                 return NotFound();
             }
-            return Ok(send);
+            return Ok(trial);
         }
 
-        // POST: api/Send
+        // POST: api/Trial
         [HttpPost]
-        public async Task<IActionResult> AddSend([FromBody] Send send)
+        public async Task<IActionResult> AddTrial([FromBody] Trial trial)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (send.SelectedLocation < 0 || send.SelectedLocation > 3)
+            if (trial.SelectedLocation < 0 || trial.SelectedLocation > 3)
             {
                 return BadRequest("SelectedLocation must be between 0 and 3.");
             }
 
-            var trainingProgram = await _context.TrainingPrograms.FindAsync(send.TrainingId);
+            var trainingProgram = await _context.TrainingPrograms.FindAsync(trial.TrainingId);
             if (trainingProgram == null)
             {
-                return BadRequest($"TrainingProgram with ID {send.TrainingId} not found.");
+                return BadRequest($"TrainingProgram with ID {trial.TrainingId} not found.");
             }
 
             var session = await _context.Sessions.FindAsync(trainingProgram.SessionId);
@@ -68,26 +68,26 @@ namespace MyFirstMvcApp.Controllers
             }
 
             // Check for unique TrainingId
-            var existingSend = await _context.Sends.FirstOrDefaultAsync(s => s.TrainingId == send.TrainingId);
-            if (existingSend != null)
+            var existingTrial = await _context.Trials.FirstOrDefaultAsync(s => s.TrainingId == trial.TrainingId);
+            if (existingTrial != null)
             {
-                return BadRequest($"A send with TrainingId {send.TrainingId} already exists.");
+                return BadRequest($"A trial with TrainingId {trial.TrainingId} already exists.");
             }
 
             // Calculate the Result attribute
-            send.Result = CalculateResult(send.SelectedLocation, trainingProgram.PositiveLocation, trainingProgram.NegativeLocation, session.ContainerType);
+            trial.Result = CalculateResult(trial.SelectedLocation, trainingProgram.PositiveLocation, trainingProgram.NegativeLocation, session.ContainerType);
 
-            _context.Sends.Add(send);
+            _context.Trials.Add(trial);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetSend), new { id = send.Id }, send);
+            return CreatedAtAction(nameof(GetTrial), new { id = trial.Id }, trial);
         }
 
-        // PUT: api/Send/5
+        // PUT: api/Trial/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSend(int id, [FromBody] Send updatedSend)
+        public async Task<IActionResult> UpdateTrial(int id, [FromBody] Trial updatedTrial)
         {
-            if (id != updatedSend.Id)
+            if (id != updatedTrial.Id)
             {
                 return BadRequest();
             }
@@ -97,10 +97,10 @@ namespace MyFirstMvcApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var trainingProgram = await _context.TrainingPrograms.FindAsync(updatedSend.TrainingId);
+            var trainingProgram = await _context.TrainingPrograms.FindAsync(updatedTrial.TrainingId);
             if (trainingProgram == null)
             {
-                return BadRequest($"TrainingProgram with ID {updatedSend.TrainingId} not found.");
+                return BadRequest($"TrainingProgram with ID {updatedTrial.TrainingId} not found.");
             }
 
             var session = await _context.Sessions.FindAsync(trainingProgram.SessionId);
@@ -110,24 +110,24 @@ namespace MyFirstMvcApp.Controllers
             }
 
             // Recalculate the Result attribute
-            updatedSend.Result = CalculateResult(updatedSend.SelectedLocation, trainingProgram.PositiveLocation, trainingProgram.NegativeLocation, session.ContainerType);
+            updatedTrial.Result = CalculateResult(updatedTrial.SelectedLocation, trainingProgram.PositiveLocation, trainingProgram.NegativeLocation, session.ContainerType);
 
-            _context.Entry(updatedSend).State = EntityState.Modified;
+            _context.Entry(updatedTrial).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
-        // DELETE: api/Send/5
+        // DELETE: api/Trial/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSend(int id)
+        public async Task<IActionResult> DeleteTrial(int id)
         {
-            var send = await _context.Sends.FindAsync(id);
-            if (send == null)
+            var trial = await _context.Trials.FindAsync(id);
+            if (trial == null)
             {
                 return NotFound();
             }
 
-            _context.Sends.Remove(send);
+            _context.Trials.Remove(trial);
             await _context.SaveChangesAsync();
             return NoContent();
         }

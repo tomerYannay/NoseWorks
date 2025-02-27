@@ -69,24 +69,24 @@ namespace MyFirstMvcApp.Controllers
             var random = new Random();
             var trainingPrograms = new List<TrainingProgram>();
 
-            int specialSendNumber = -1;
-            if (session.SendX)
+            int specialTrialNumber = -1;
+            if (session.TrialX)
             {
-                specialSendNumber = random.Next(session.NumberOfSends / 2, session.NumberOfSends);
+                specialTrialNumber = random.Next(session.NumberOfTrials / 2, session.NumberOfTrials);
             }
 
-            for (int i = 0; i < session.NumberOfSends; i++)
+            for (int i = 0; i < session.NumberOfTrials; i++)
             {
                 var trainingProgram = new TrainingProgram
                 {
                     SessionId = sessionId,
-                    SendNumber = i
+                    TrialNumber = i
                 };
 
-                if (i == specialSendNumber)
+                if (i == specialTrialNumber)
                 {
                     trainingProgram.PositiveLocation = 0;
-                    trainingProgram.NegativeLocation = 0;
+                    trainingProgram.NegativeLocation = random.Next(1, 4);
                 }
                 else{
                     if (session.ContainerType == ContainerType.PositiveControl)
@@ -133,22 +133,22 @@ namespace MyFirstMvcApp.Controllers
                     return BadRequest($"Session with ID {program.SessionId} not found.");
                 }
 
-                if (program.SendNumber < 0 || program.SendNumber > session.NumberOfSends)
+                if (program.TrialNumber < 0 || program.TrialNumber > session.NumberOfTrials)
                 {
-                    return BadRequest($"SendNumber for program {program.SendNumber} must be between 0 and {session.NumberOfSends}.");
+                    return BadRequest($"TrialNumber for program {program.TrialNumber} must be between 0 and {session.NumberOfTrials}.");
                 }
 
-                if (program.PositiveLocation == program.NegativeLocation && program.PositiveLocation != 0)
+                if (program.PositiveLocation == program.NegativeLocation)
                 {
                     return BadRequest("PositiveLocation and NegativeLocation cannot be the same.");
                 }
 
                 // Check for duplicates
                 var existingProgram = await _context.TrainingPrograms
-                    .FirstOrDefaultAsync(tp => tp.SessionId == program.SessionId && tp.SendNumber == program.SendNumber);
+                    .FirstOrDefaultAsync(tp => tp.SessionId == program.SessionId && tp.TrialNumber == program.TrialNumber);
                 if (existingProgram != null)
                 {
-                    return BadRequest($"A training program with SessionId {program.SessionId} and SendNumber {program.SendNumber} already exists.");
+                    return BadRequest($"A training program with SessionId {program.SessionId} and TrialNumber {program.TrialNumber} already exists.");
                 }
 
                 // Add each program to the context
@@ -185,9 +185,9 @@ namespace MyFirstMvcApp.Controllers
                 return BadRequest("Session not found.");
             }
 
-            if (updatedProgram.SendNumber < 0 || updatedProgram.SendNumber > session.NumberOfSends)
+            if (updatedProgram.TrialNumber < 0 || updatedProgram.TrialNumber > session.NumberOfTrials)
             {
-                return BadRequest($"SendNumber must be between 0 and {session.NumberOfSends}.");
+                return BadRequest($"TrialNumber must be between 0 and {session.NumberOfTrials}.");
             }
 
             _context.Entry(updatedProgram).State = EntityState.Modified;
