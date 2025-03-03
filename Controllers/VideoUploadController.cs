@@ -45,8 +45,8 @@ namespace MyFirstMvcApp.Controllers
                 return NotFound($"Session with ID {trainingProgram.SessionId} not found.");
             }
 
-            var bucketName = Environment.GetEnvironmentVariable("AWS_BUCKET_NAME");
-            var keyName = $"{session.Id}/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var bucketName = "noseworks";
+            var keyName = $"{session.Id}/{trainingProgramId}/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
             try
             {
@@ -93,7 +93,6 @@ namespace MyFirstMvcApp.Controllers
             {
                 return NotFound("No video found for this training program.");
             }
-
             return Ok(new { Url = videoUrl });
         }
     }
