@@ -65,5 +65,41 @@
         <member name="M:NoseWorks.Migrations.AddVideoUrlToTrainingProgram.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:NoseWorks.Migrations.MakeVideoUrlOptional">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.MakeVideoUrlOptional.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.MakeVideoUrlOptional.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.MakeVideoUrlOptional.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:NoseWorks.Migrations.UpdateVideoUrlNullability">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:NoseWorks.Migrations.UpdateVideoUrlNullability2">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability2.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability2.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability2.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>
