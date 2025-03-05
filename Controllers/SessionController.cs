@@ -99,5 +99,44 @@ namespace MyFirstMvcApp.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        /// <summary>
+        /// Retrieves the status of a session by ID.
+        /// </summary>
+        [HttpGet("status/{sessionId}")]
+        public async Task<IActionResult> GetSessionStatus(int sessionId)
+        {
+            var session = await _context.Sessions.FindAsync(sessionId);
+            if (session == null)
+            {
+                return NotFound($"Session with ID {sessionId} not found.");
+            }
+
+            var status = session.FinalResults.Count == session.NumberOfTrials ? "Completed" : "InProgress";
+            return Ok(new { Status = status });
+        }
+
+        /// <summary>
+        /// Retrieves the DPrime score of a session by ID.
+        /// </summary>
+        [HttpGet("dprime/{sessionId}")]
+        public async Task<IActionResult> GetDPrimeScore(int sessionId)
+        {
+            var session = await _context.Sessions.FindAsync(sessionId);
+            if (session == null)
+            {
+                return NotFound($"Session with ID {sessionId} not found.");
+            }
+
+            if (session.FinalResults == null || session.FinalResults.Count == 0)
+            {
+                return Ok(new { DPrime = 0.0 });
+            }
+
+            var hitCount = session.FinalResults.Count(result => result == "H");
+            var dPrime = (double)hitCount / session.FinalResults.Count;
+
+            return Ok(new { DPrime = dPrime });
+        }
     }
 }

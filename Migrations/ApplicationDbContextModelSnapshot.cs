@@ -306,9 +306,6 @@ namespace NoseWorks.Migrations
                     b.Property<int>("TrialNumber")
                         .HasColumnType("integer");
 
-                    b.Property<string>("VideoUrl")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.ToTable("TrainingPrograms");
@@ -335,6 +332,9 @@ namespace NoseWorks.Migrations
 
                     b.Property<int>("TrainingId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

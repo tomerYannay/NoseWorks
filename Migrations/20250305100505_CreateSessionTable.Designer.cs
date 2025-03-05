@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250227141314_AddVideoUrlToTrainingProgram")]
-    partial class AddVideoUrlToTrainingProgram
+    [Migration("20250305100505_CreateSessionTable")]
+    partial class CreateSessionTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -310,7 +310,6 @@ namespace NoseWorks.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("VideoUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

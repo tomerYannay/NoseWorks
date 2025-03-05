@@ -29,76 +29,38 @@
             Deletes a specific session by ID.
             </summary>
         </member>
-        <member name="T:NoseWorks.Migrations.CreateSendsTable">
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.GetSessionStatus(System.Int32)">
+            <summary>
+            Retrieves the status of a session by ID.
+            </summary>
+        </member>
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.GetDPrimeScore(System.Int32)">
+            <summary>
+            Retrieves the DPrime score of a session by ID.
+            </summary>
+        </member>
+        <member name="T:NoseWorks.Migrations.CreateSessionTable">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSendsTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.CreateSessionTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSendsTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.CreateSessionTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSendsTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:NoseWorks.Migrations.CreateSessionTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:NoseWorks.Migrations.RenameSendToTrialAndUpdateAttributes">
+        <member name="T:NoseWorks.Migrations.AddVideoUrlToTrial">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.RenameSendToTrialAndUpdateAttributes.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.RenameSendToTrialAndUpdateAttributes.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.RenameSendToTrialAndUpdateAttributes.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.AddVideoUrlToTrainingProgram">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrainingProgram.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrainingProgram.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrainingProgram.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.MakeVideoUrlOptional">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.MakeVideoUrlOptional.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.MakeVideoUrlOptional.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.MakeVideoUrlOptional.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.UpdateVideoUrlNullability">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.UpdateVideoUrlNullability2">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability2.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability2.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.UpdateVideoUrlNullability2.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

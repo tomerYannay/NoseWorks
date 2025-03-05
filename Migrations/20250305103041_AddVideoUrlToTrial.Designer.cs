@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250227131602_RenameSendToTrialAndUpdateAttributes")]
-    partial class RenameSendToTrialAndUpdateAttributes
+    [Migration("20250305103041_AddVideoUrlToTrial")]
+    partial class AddVideoUrlToTrial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -335,6 +335,9 @@ namespace NoseWorks.Migrations
 
                     b.Property<int>("TrainingId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

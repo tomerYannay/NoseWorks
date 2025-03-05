@@ -17,5 +17,7 @@ namespace MyFirstMvcApp.Models{
 
         [Required]
         public string Result { get; set; }
+
+        public string? VideoUrl { get; set; }
     }
 }

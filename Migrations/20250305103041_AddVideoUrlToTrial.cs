@@ -5,17 +5,20 @@
 namespace NoseWorks.Migrations
 {
     /// <inheritdoc />
-    public partial class AddVideoUrlToTrainingProgram : Migration
+    public partial class AddVideoUrlToTrial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "VideoUrl",
+                table: "TrainingPrograms");
+
             migrationBuilder.AddColumn<string>(
                 name: "VideoUrl",
-                table: "TrainingPrograms",
+                table: "Trials",
                 type: "text",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         /// <inheritdoc />
@@ -23,7 +26,13 @@ namespace NoseWorks.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "VideoUrl",
-                table: "TrainingPrograms");
+                table: "Trials");
+
+            migrationBuilder.AddColumn<string>(
+                name: "VideoUrl",
+                table: "TrainingPrograms",
+                type: "text",
+                nullable: true);
         }
     }
 }

@@ -21,8 +21,6 @@ namespace MyFirstMvcApp.Models{
         [Required]
         public int SessionId { get; set; }
 
-        public string? VideoUrl { get; set; }
-
     }
     
 }
