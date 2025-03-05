@@ -63,5 +63,17 @@
         <member name="M:NoseWorks.Migrations.AddVideoUrlToTrial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:NoseWorks.Migrations.AddDogImage">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.AddDogImage.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.AddDogImage.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.AddDogImage.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

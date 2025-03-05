@@ -13,6 +13,8 @@ namespace MyFirstMvcApp.Models{
         [Required]
         public DateTime DateOfBirth {get; set; }
 
+        public string ImageUrl { get; set; }
+
     }
     
 }

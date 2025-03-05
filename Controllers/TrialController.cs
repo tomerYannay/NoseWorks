@@ -187,7 +187,7 @@ namespace MyFirstMvcApp.Controllers
                 return NotFound($"Trial with ID {trialId} not found.");
             }
 
-            var bucketName = Environment.GetEnvironmentVariable("AWS_BUCKET_NAME");
+            var bucketName = "noseworks";
             var keyName = $"{trialId}/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
             try

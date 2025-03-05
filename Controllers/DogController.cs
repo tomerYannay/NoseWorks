@@ -5,18 +5,24 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using Amazon.S3.Model;
 
 namespace MyFirstMvcApp.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class DogController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAmazonS3 _s3Client;
 
-        public DogController(ApplicationDbContext context)
+        public DogController(IAmazonS3 s3Client, ApplicationDbContext context)
         {
+            _s3Client = s3Client;
             _context = context;
         }
 
@@ -87,5 +93,76 @@ namespace MyFirstMvcApp.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        [HttpPost("uploadImage/{dogId}")]
+        public async Task<IActionResult> UploadImage(int dogId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            var dog = await _context.Dogs.FindAsync(dogId);
+            if (dog == null)
+            {
+                return NotFound($"Dog with ID {dogId} not found.");
+            }
+
+            // Define the bucket name and key (file name) for the image
+            var bucketName = Environment.GetEnvironmentVariable("AWS_BUCKET_NAME");
+            var keyName = $"dogs/{dogId}/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+
+            try
+            {
+                using (var newMemoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(newMemoryStream);
+
+                    var uploadRequest = new TransferUtilityUploadRequest
+                    {
+                        InputStream = newMemoryStream,
+                        Key = keyName,
+                        BucketName = bucketName,
+                        CannedACL = S3CannedACL.PublicRead
+                    };
+
+                    var fileTransferUtility = new TransferUtility(_s3Client);
+                    await fileTransferUtility.UploadAsync(uploadRequest);
+                }
+
+                // Store the URL of the uploaded image in the dog model
+                dog.ImageUrl = $"https://{bucketName}.s3.amazonaws.com/{keyName}";
+
+                // Update the Dog entity with the new image URL
+                _context.Dogs.Update(dog);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { FileName = keyName, FilePath = dog.ImageUrl });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error uploading file: {ex.Message}");
+            }
+        }
+
+        [HttpGet("getImage/{dogId}")]
+        public async Task<IActionResult> GetImage(int dogId)
+        {
+            // Find the dog by its ID
+            var dog = await _context.Dogs.FindAsync(dogId);
+            if (dog == null)
+            {
+                return NotFound($"Dog with ID {dogId} not found.");
+            }
+
+            // Check if the dog has an image URL
+            if (string.IsNullOrEmpty(dog.ImageUrl))
+            {
+                return NotFound("No image found for this dog.");
+            }
+            // Return the image URL in the response
+            return Ok(new { ImageUrl = dog.ImageUrl });
+        }
+
     }
 }
