@@ -5,25 +5,18 @@
 namespace NoseWorks.Migrations
 {
     /// <inheritdoc />
-    public partial class AddDogImage : Migration
+    public partial class AddVisitedLocations2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ImageUrl",
-                table: "Dogs",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ImageUrl",
-                table: "Dogs");
+
         }
     }
 }

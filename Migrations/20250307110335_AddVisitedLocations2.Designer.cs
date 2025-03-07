@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250305100505_CreateSessionTable")]
-    partial class CreateSessionTable
+    [Migration("20250307110335_AddVisitedLocations2")]
+    partial class AddVisitedLocations2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -241,6 +241,10 @@ namespace NoseWorks.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -309,9 +313,6 @@ namespace NoseWorks.Migrations
                     b.Property<int>("TrialNumber")
                         .HasColumnType("integer");
 
-                    b.Property<string>("VideoUrl")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.ToTable("TrainingPrograms");
@@ -338,6 +339,12 @@ namespace NoseWorks.Migrations
 
                     b.Property<int>("TrainingId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("text");
+
+                    b.PrimitiveCollection<List<int>>("VisitedLocations")
+                        .HasColumnType("integer[]");
 
                     b.HasKey("Id");
 

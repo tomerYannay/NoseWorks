@@ -340,6 +340,9 @@ namespace NoseWorks.Migrations
                     b.Property<string>("VideoUrl")
                         .HasColumnType("text");
 
+                    b.PrimitiveCollection<List<int>>("VisitedLocations")
+                        .HasColumnType("integer[]");
+
                     b.HasKey("Id");
 
                     b.ToTable("Trials");

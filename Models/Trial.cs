@@ -20,7 +20,7 @@ namespace MyFirstMvcApp.Models{
 
         public string? VideoUrl { get; set; }
 
-        public List<int> VisitedLocations { get; set; } = new List<int>();
+        public List<int>? VisitedLocations { get; set; } = new List<int>();
 
     }
 }

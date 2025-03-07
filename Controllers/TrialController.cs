@@ -285,5 +285,27 @@ namespace MyFirstMvcApp.Controllers
             _context.Sessions.Update(session);
             await _context.SaveChangesAsync();
         }
+
+        // GET: api/Trial/bySession/{sessionId}
+        [HttpGet("bySession/{sessionId}")]
+        public async Task<IActionResult> GetTrialsBySession(int sessionId)
+        {
+            var trainingPrograms = await _context.TrainingPrograms
+                .Where(tp => tp.SessionId == sessionId)
+                .ToListAsync();
+
+            if (trainingPrograms == null || !trainingPrograms.Any())
+            {
+                return NotFound($"No training programs found for session with ID {sessionId}.");
+            }
+
+            var trainingProgramIds = trainingPrograms.Select(tp => tp.Id).ToList();
+
+            var trials = await _context.Trials
+                .Where(t => trainingProgramIds.Contains(t.TrainingId))
+                .ToListAsync();
+
+            return Ok(trials);
+        }
     }
 }

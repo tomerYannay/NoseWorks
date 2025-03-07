@@ -39,40 +39,16 @@
             Retrieves the DPrime score of a session by ID.
             </summary>
         </member>
-        <member name="T:NoseWorks.Migrations.CreateSessionTable">
+        <member name="T:NoseWorks.Migrations.AddVisitedLocations2">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSessionTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.AddVisitedLocations2.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSessionTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.AddVisitedLocations2.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.CreateSessionTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.AddVideoUrlToTrial">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddVideoUrlToTrial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.AddDogImage">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddDogImage.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddDogImage.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.AddDogImage.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:NoseWorks.Migrations.AddVisitedLocations2.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>
