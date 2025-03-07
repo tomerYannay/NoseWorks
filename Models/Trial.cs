@@ -19,5 +19,8 @@ namespace MyFirstMvcApp.Models{
         public string Result { get; set; }
 
         public string? VideoUrl { get; set; }
+
+        public List<int> VisitedLocations { get; set; } = new List<int>();
+
     }
 }

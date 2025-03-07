@@ -136,6 +136,9 @@ namespace MyFirstMvcApp.Controllers
             var hitCount = session.FinalResults.Count(result => result == "H");
             var dPrime = (double)hitCount / session.FinalResults.Count;
 
+            session.DPrimeScore = (float)dPrime; // Update the session's DPrimeScore with the calculated value
+            await _context.SaveChangesAsync();
+
             return Ok(new { DPrime = dPrime });
         }
     }

@@ -83,6 +83,11 @@ namespace MyFirstMvcApp.Controllers
                 return BadRequest($"A trial with TrainingId {trial.TrainingId} already exists.");
             }
 
+            if (trial.VisitedLocations != null && trial.VisitedLocations.Any(location => location < 0 || location > 3))
+            {
+                return BadRequest("Each value in VisitedLocations must be between 0 and 3.");
+            }
+
             // Calculate the Result attribute
             trial.Result = CalculateResult(trial.SelectedLocation, trainingProgram.PositiveLocation, trainingProgram.NegativeLocation, session.ContainerType);
             _context.Trials.Add(trial);
@@ -106,6 +111,16 @@ namespace MyFirstMvcApp.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (updatedTrial.SelectedLocation < 0 || updatedTrial.SelectedLocation > 3)
+            {
+                return BadRequest("SelectedLocation must be between 0 and 3.");
+            }
+
+            if (updatedTrial.VisitedLocations != null && updatedTrial.VisitedLocations.Any(location => location < 0 || location > 3))
+            {
+                return BadRequest("Each value in VisitedLocations must be between 0 and 3.");
             }
 
             var trainingProgram = await _context.TrainingPrograms.FindAsync(updatedTrial.TrainingId);
