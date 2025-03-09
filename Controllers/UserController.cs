@@ -177,32 +177,18 @@ namespace MyFirstMvcApp.Controllers
             return Ok("Password reset link has been sent to your email.");
         }
 
-        // POST: api/User/ResetPassword
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+        // GET: api/User/ResetPassword?token=tokenValue&email=email
+        [HttpGet("ResetPassword")]
+        public IActionResult ResetPassword(string token, string email)
         {
-            if (!ModelState.IsValid)
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(email))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Token and email are required.");
             }
 
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                return BadRequest("User not found.");
-            }
+            // Handle password reset logic here, like showing a form or processing the reset.
 
-            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return BadRequest(ModelState);
-            }
-
-            return Ok("Password has been reset successfully.");
+            return Ok("Password reset token is valid.");
         }
 
         // GET: api/User

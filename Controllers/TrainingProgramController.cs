@@ -144,7 +144,7 @@ namespace MyFirstMvcApp.Controllers
                     return BadRequest($"TrialNumber for program {program.TrialNumber} must be between 0 and {session.NumberOfTrials}.");
                 }
 
-                if (program.PositiveLocation == program.NegativeLocation)
+                if (program.PositiveLocation == program.NegativeLocation && program.PositiveLocation != 0)
                 {
                     return BadRequest("PositiveLocation and NegativeLocation cannot be the same.");
                 }
