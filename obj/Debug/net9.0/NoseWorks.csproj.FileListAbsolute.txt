@@ -283,3 +283,4 @@
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/NoseWorks.pdb
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/NoseWorks.genruntimeconfig.cache
 /Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/obj/Debug/net9.0/ref/NoseWorks.dll
+/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/bin/Debug/net9.0/AWSSDK.SQS.dll

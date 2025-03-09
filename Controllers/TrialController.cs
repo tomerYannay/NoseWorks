@@ -7,6 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Amazon.S3;
+using Amazon.SQS;
+using Newtonsoft.Json;
+using Amazon.SQS.Model;
 using Amazon.S3.Transfer;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -205,34 +208,39 @@ namespace MyFirstMvcApp.Controllers
             var bucketName = "noseworks";
             var keyName = $"{trialId}/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
-            try
+            // Save the file to a temporary location
+            var uploadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads");
+            if (!Directory.Exists(uploadDirectory))
             {
-                using (var newMemoryStream = new MemoryStream())
-                {
-                    file.CopyTo(newMemoryStream);
-
-                    var uploadRequest = new TransferUtilityUploadRequest
-                    {
-                        InputStream = newMemoryStream,
-                        Key = keyName,
-                        BucketName = bucketName,
-                        CannedACL = S3CannedACL.PublicRead
-                    };
-
-                    var fileTransferUtility = new TransferUtility(_s3Client);
-                    await fileTransferUtility.UploadAsync(uploadRequest);
-                }
-
-                trial.VideoUrl = $"https://{bucketName}.s3.amazonaws.com/{keyName}";
-                _context.Trials.Update(trial);
-                await _context.SaveChangesAsync();
-
-                return Ok(new { FileName = keyName, FilePath = trial.VideoUrl });
+                Directory.CreateDirectory(uploadDirectory);
             }
-            catch (Exception ex)
+            var filePath = Path.Combine(uploadDirectory, file.FileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error uploading file: {ex.Message}");
+                await file.CopyToAsync(stream);
             }
+
+            // Send a message to the SQS queue with the necessary information
+            var sqsClient = new AmazonSQSClient();
+            var queueUrl = "https://sqs.eu-central-1.amazonaws.com/931894660086/noseWorks";
+            var messageBody = new
+            {
+                TrialId = trialId,
+                BucketName = bucketName,
+                KeyName = keyName,
+                FileName = file.FileName
+            };
+
+            var sendMessageRequest = new SendMessageRequest
+            {
+                QueueUrl = queueUrl,
+                MessageBody = JsonConvert.SerializeObject(messageBody)
+            };
+
+            await sqsClient.SendMessageAsync(sendMessageRequest);
+
+            return Ok(new { Message = "Video upload request has been queued." });
         }
 
         // GET: api/Trial/getVideo/{trialId}

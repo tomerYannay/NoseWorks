@@ -1,14 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "XQF/6s//9Rc=",
+  "dgSpecHash": "YszP1ROhwQ8=",
   "success": true,
   "projectFilePath": "/Users/shimonyannay/MyFirstConsoleApp/MyFirstWebApp/NoseWorks/NoseWorks.csproj",
   "expectedPackageFiles": [
     "/Users/shimonyannay/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/shimonyannay/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
-    "/Users/shimonyannay/.nuget/packages/awssdk.core/3.7.402.8/awssdk.core.3.7.402.8.nupkg.sha512",
+    "/Users/shimonyannay/.nuget/packages/awssdk.core/3.7.402.15/awssdk.core.3.7.402.15.nupkg.sha512",
     "/Users/shimonyannay/.nuget/packages/awssdk.extensions.netcore.setup/3.7.400/awssdk.extensions.netcore.setup.3.7.400.nupkg.sha512",
-    "/Users/shimonyannay/.nuget/packages/awssdk.s3/3.7.415.7/awssdk.s3.3.7.415.7.nupkg.sha512",
+    "/Users/shimonyannay/.nuget/packages/awssdk.s3/3.7.415.14/awssdk.s3.3.7.415.14.nupkg.sha512",
+    "/Users/shimonyannay/.nuget/packages/awssdk.sqs/3.7.400.109/awssdk.sqs.3.7.400.109.nupkg.sha512",
     "/Users/shimonyannay/.nuget/packages/castle.core/4.4.0/castle.core.4.4.0.nupkg.sha512",
     "/Users/shimonyannay/.nuget/packages/dotnetenv/3.1.1/dotnetenv.3.1.1.nupkg.sha512",
     "/Users/shimonyannay/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

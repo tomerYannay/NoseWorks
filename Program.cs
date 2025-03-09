@@ -11,12 +11,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.S3;
+using Amazon.SQS;
 using DotNetEnv;
-
+using Microsoft.Extensions.Hosting;
 
 // Load environment variables from .env file
 Env.Load();
-
 
 // Explicitly retrieve environment variables and build the connection string
 string postgresUser = "tomer_yannay";
@@ -62,7 +62,6 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
 
 builder.Services.AddAuthentication(options =>
 {
@@ -114,12 +113,29 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-// Add AWS S3 service
+// Add AWS S3 and SQS services using environment variables
+builder.Services.AddDefaultAWSOptions(new AWSOptions
+{
+    Credentials = new Amazon.Runtime.BasicAWSCredentials(
+        Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
+        Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY")),
+    Region = Amazon.RegionEndpoint.GetBySystemName(Environment.GetEnvironmentVariable("AWS_REGION"))
+});
 builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddAWSService<IAmazonSQS>();
+
+// Register the background service
+builder.Services.AddHostedService<SqsBackgroundService>(provider =>
+{
+    var sqsClient = provider.GetRequiredService<IAmazonSQS>();
+    var s3Client = provider.GetRequiredService<IAmazonS3>();
+    var logger = provider.GetRequiredService<ILogger<SqsBackgroundService>>();
+    var serviceProvider = provider.GetRequiredService<IServiceProvider>();
+    var queueUrl = "https://sqs.eu-central-1.amazonaws.com/931894660086/noseWorks"; // Keep the queue URL
+    return new SqsBackgroundService(sqsClient, s3Client, logger, queueUrl, serviceProvider);
+});
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

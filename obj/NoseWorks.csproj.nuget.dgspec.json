@@ -50,7 +50,11 @@
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[3.7.415.7, )"
+              "version": "[3.7.415.14, )"
+            },
+            "AWSSDK.SQS": {
+              "target": "Package",
+              "version": "[3.7.400.109, )"
             },
             "AutoMapper": {
               "target": "Package",

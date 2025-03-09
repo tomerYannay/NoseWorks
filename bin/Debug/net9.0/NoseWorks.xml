@@ -51,5 +51,17 @@
         <member name="M:NoseWorks.Migrations.AddVisitedLocations2.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:NoseWorks.Migrations.updateResetPassword">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.updateResetPassword.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.updateResetPassword.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NoseWorks.Migrations.updateResetPassword.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

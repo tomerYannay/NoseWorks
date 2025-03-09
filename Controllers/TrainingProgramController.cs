@@ -85,8 +85,14 @@ namespace MyFirstMvcApp.Controllers
 
                 if (i == specialTrialNumber)
                 {
-                    trainingProgram.PositiveLocation = 0;
-                    trainingProgram.NegativeLocation = random.Next(1, 4);
+                    if(session.ContainerType == ContainerType.PositiveControl){
+                        trainingProgram.PositiveLocation = 0;
+                        trainingProgram.NegativeLocation = 0;
+                    }
+                    else{
+                        trainingProgram.PositiveLocation = 0;
+                        trainingProgram.NegativeLocation = random.Next(1, 4);
+                    }
                 }
                 else{
                     if (session.ContainerType == ContainerType.PositiveControl)

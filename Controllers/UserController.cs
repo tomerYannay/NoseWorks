@@ -63,8 +63,9 @@ namespace MyFirstMvcApp.Controllers
             if (result.Succeeded)
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token }, Request.Scheme);
-
+                var relativeUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token }, Request.Scheme);
+                var confirmationLink = relativeUrl.Replace("localhost:5279", "54.93.49.108:5173");
+                
                 // Send email
                 await _emailSender.SendEmailAsync(user.Email, "Confirm your email", $"Please confirm your email by clicking here: {confirmationLink}");
 
@@ -185,16 +186,20 @@ namespace MyFirstMvcApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _userManager.FindByIdAsync(model.UserId);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return BadRequest("Invalid user ID.");
+                return BadRequest("User not found.");
             }
 
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
             if (!result.Succeeded)
             {
-                return BadRequest(result.Errors);
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return BadRequest(ModelState);
             }
 
             return Ok("Password has been reset successfully.");
@@ -204,14 +209,15 @@ namespace MyFirstMvcApp.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            return Ok(_context.Users.ToList());
+            var users = _userManager.Users.ToList();
+            return Ok(users);
         }
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(string id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -219,42 +225,56 @@ namespace MyFirstMvcApp.Controllers
             return Ok(user);
         }
 
-        // POST: api/User
-        [HttpPost]
-        public async Task<IActionResult> PostUser(User user)
-        {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
-        }
+        // // PUT: api/User/5
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> PutUser(string id, [FromBody] User user)
+        // {
+        //     if (id != user.UserId.ToString())
+        //     {
+        //         return BadRequest();
+        //     }
 
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
-        {
-            if (id != user.UserId)
-            {
-                return BadRequest();
-            }
+        //     var identityUser = await _userManager.FindByIdAsync(id);
+        //     if (identityUser == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            await _context.SaveChangesAsync();
+        //     identityUser.Email = user.Email;
 
-            return NoContent();
-        }
+        //     var result = await _userManager.UpdateAsync(identityUser);
+        //     if (!result.Succeeded)
+        //     {
+        //         foreach (var error in result.Errors)
+        //         {
+        //             ModelState.AddModelError(string.Empty, error.Description);
+        //         }
+        //         return BadRequest(ModelState);
+        //     }
+
+        //     return NoContent();
+        // }
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return BadRequest(ModelState);
+            }
+
             return NoContent();
         }
 

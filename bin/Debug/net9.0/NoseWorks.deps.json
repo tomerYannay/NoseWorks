@@ -9,7 +9,8 @@
       "NoseWorks/1.0.0": {
         "dependencies": {
           "AWSSDK.Extensions.NETCore.Setup": "3.7.400",
-          "AWSSDK.S3": "3.7.415.7",
+          "AWSSDK.S3": "3.7.415.14",
+          "AWSSDK.SQS": "3.7.400.109",
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "DotNetEnv": "3.1.1",
@@ -54,17 +55,17 @@
           }
         }
       },
-      "AWSSDK.Core/3.7.402.8": {
+      "AWSSDK.Core/3.7.402.15": {
         "runtime": {
           "lib/net8.0/AWSSDK.Core.dll": {
             "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.7.402.8"
+            "fileVersion": "3.7.402.15"
           }
         }
       },
       "AWSSDK.Extensions.NETCore.Setup/3.7.400": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.402.8",
+          "AWSSDK.Core": "3.7.402.15",
           "Microsoft.Extensions.Configuration.Abstractions": "9.0.1",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.1",
           "Microsoft.Extensions.Logging.Abstractions": "9.0.1"
@@ -76,14 +77,25 @@
           }
         }
       },
-      "AWSSDK.S3/3.7.415.7": {
+      "AWSSDK.S3/3.7.415.14": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.402.8"
+          "AWSSDK.Core": "3.7.402.15"
         },
         "runtime": {
           "lib/net8.0/AWSSDK.S3.dll": {
             "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.7.415.7"
+            "fileVersion": "3.7.415.14"
+          }
+        }
+      },
+      "AWSSDK.SQS/3.7.400.109": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.402.15"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.SQS.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.400.109"
           }
         }
       },
@@ -1738,12 +1750,12 @@
       "path": "automapper.extensions.microsoft.dependencyinjection/12.0.1",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512"
     },
-    "AWSSDK.Core/3.7.402.8": {
+    "AWSSDK.Core/3.7.402.15": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ah2B+RMiIPLzGMRGq4Z8k4+uJKOhVw5MHaUF27bFrAm113qoF+PWWBdOBzIaUf6AF/luOLdnn/l1x6xIy6ZdeQ==",
-      "path": "awssdk.core/3.7.402.8",
-      "hashPath": "awssdk.core.3.7.402.8.nupkg.sha512"
+      "sha512": "sha512-DTPVxvjHbL5tb8rcqNxDGaYF+2zON+2OECeGiAqAQidi49EBoRvuXD7USuDFO0+bZpIxtSh1XCMTBysug1OiXw==",
+      "path": "awssdk.core/3.7.402.15",
+      "hashPath": "awssdk.core.3.7.402.15.nupkg.sha512"
     },
     "AWSSDK.Extensions.NETCore.Setup/3.7.400": {
       "type": "package",
@@ -1752,12 +1764,19 @@
       "path": "awssdk.extensions.netcore.setup/3.7.400",
       "hashPath": "awssdk.extensions.netcore.setup.3.7.400.nupkg.sha512"
     },
-    "AWSSDK.S3/3.7.415.7": {
+    "AWSSDK.S3/3.7.415.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-e9ngQuFoPWgJ9Hn1UJN78v3MclcLPggjYWzIFjEj19DhxxduJJ+0P6vtUA7dR8yFQsK5mC+BKlywO3LQ7mLLvQ==",
-      "path": "awssdk.s3/3.7.415.7",
-      "hashPath": "awssdk.s3.3.7.415.7.nupkg.sha512"
+      "sha512": "sha512-K1Jvm6f17pFrj4VuwZfj5adaMyKP9ZDh/EaUSRMXWW9xKjSiFExfyfj+juiFySmgXBjDS+kOEFYQDTTzlcRSig==",
+      "path": "awssdk.s3/3.7.415.14",
+      "hashPath": "awssdk.s3.3.7.415.14.nupkg.sha512"
+    },
+    "AWSSDK.SQS/3.7.400.109": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-X20V3TEN9iExqJFVvpyIb/Hqj+Nni1GZjbnxW+0rr77Qnu3JyCQNTeX3V60hhcP6gcdzhz1aV3+G3cj2VlXJGw==",
+      "path": "awssdk.sqs/3.7.400.109",
+      "hashPath": "awssdk.sqs.3.7.400.109.nupkg.sha512"
     },
     "Castle.Core/4.4.0": {
       "type": "package",

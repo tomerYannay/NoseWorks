@@ -31,7 +31,7 @@
           "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
-      "AWSSDK.Core/3.7.402.8": {
+      "AWSSDK.Core/3.7.402.15": {
         "type": "package",
         "compile": {
           "lib/net8.0/AWSSDK.Core.dll": {
@@ -63,10 +63,10 @@
           }
         }
       },
-      "AWSSDK.S3/3.7.415.7": {
+      "AWSSDK.S3/3.7.415.14": {
         "type": "package",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.402.8, 4.0.0)"
+          "AWSSDK.Core": "[3.7.402.15, 4.0.0)"
         },
         "compile": {
           "lib/net8.0/AWSSDK.S3.dll": {
@@ -75,6 +75,22 @@
         },
         "runtime": {
           "lib/net8.0/AWSSDK.S3.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "AWSSDK.SQS/3.7.400.109": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.7.402.15, 4.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.SQS.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.SQS.dll": {
             "related": ".pdb;.xml"
           }
         }
@@ -3079,15 +3095,15 @@
         "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
       ]
     },
-    "AWSSDK.Core/3.7.402.8": {
-      "sha512": "ah2B+RMiIPLzGMRGq4Z8k4+uJKOhVw5MHaUF27bFrAm113qoF+PWWBdOBzIaUf6AF/luOLdnn/l1x6xIy6ZdeQ==",
+    "AWSSDK.Core/3.7.402.15": {
+      "sha512": "DTPVxvjHbL5tb8rcqNxDGaYF+2zON+2OECeGiAqAQidi49EBoRvuXD7USuDFO0+bZpIxtSh1XCMTBysug1OiXw==",
       "type": "package",
-      "path": "awssdk.core/3.7.402.8",
+      "path": "awssdk.core/3.7.402.15",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "awssdk.core.3.7.402.8.nupkg.sha512",
+        "awssdk.core.3.7.402.15.nupkg.sha512",
         "awssdk.core.nuspec",
         "images/AWSLogo.png",
         "lib/net35/AWSSDK.Core.dll",
@@ -3126,17 +3142,17 @@
         "lib/netstandard2.0/AWSSDK.Extensions.NETCore.Setup.pdb"
       ]
     },
-    "AWSSDK.S3/3.7.415.7": {
-      "sha512": "e9ngQuFoPWgJ9Hn1UJN78v3MclcLPggjYWzIFjEj19DhxxduJJ+0P6vtUA7dR8yFQsK5mC+BKlywO3LQ7mLLvQ==",
+    "AWSSDK.S3/3.7.415.14": {
+      "sha512": "K1Jvm6f17pFrj4VuwZfj5adaMyKP9ZDh/EaUSRMXWW9xKjSiFExfyfj+juiFySmgXBjDS+kOEFYQDTTzlcRSig==",
       "type": "package",
-      "path": "awssdk.s3/3.7.415.7",
+      "path": "awssdk.s3/3.7.415.14",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "analyzers/dotnet/cs/AWSSDK.S3.CodeAnalysis.dll",
         "analyzers/dotnet/cs/SharedAnalysisCode.dll",
-        "awssdk.s3.3.7.415.7.nupkg.sha512",
+        "awssdk.s3.3.7.415.14.nupkg.sha512",
         "awssdk.s3.nuspec",
         "images/AWSLogo.png",
         "lib/net35/AWSSDK.S3.dll",
@@ -3154,6 +3170,38 @@
         "lib/netstandard2.0/AWSSDK.S3.dll",
         "lib/netstandard2.0/AWSSDK.S3.pdb",
         "lib/netstandard2.0/AWSSDK.S3.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.SQS/3.7.400.109": {
+      "sha512": "X20V3TEN9iExqJFVvpyIb/Hqj+Nni1GZjbnxW+0rr77Qnu3JyCQNTeX3V60hhcP6gcdzhz1aV3+G3cj2VlXJGw==",
+      "type": "package",
+      "path": "awssdk.sqs/3.7.400.109",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.SQS.CodeAnalysis.dll",
+        "analyzers/dotnet/cs/SharedAnalysisCode.dll",
+        "awssdk.sqs.3.7.400.109.nupkg.sha512",
+        "awssdk.sqs.nuspec",
+        "images/AWSLogo.png",
+        "lib/net35/AWSSDK.SQS.dll",
+        "lib/net35/AWSSDK.SQS.pdb",
+        "lib/net35/AWSSDK.SQS.xml",
+        "lib/net45/AWSSDK.SQS.dll",
+        "lib/net45/AWSSDK.SQS.pdb",
+        "lib/net45/AWSSDK.SQS.xml",
+        "lib/net8.0/AWSSDK.SQS.dll",
+        "lib/net8.0/AWSSDK.SQS.pdb",
+        "lib/net8.0/AWSSDK.SQS.xml",
+        "lib/netcoreapp3.1/AWSSDK.SQS.dll",
+        "lib/netcoreapp3.1/AWSSDK.SQS.pdb",
+        "lib/netcoreapp3.1/AWSSDK.SQS.xml",
+        "lib/netstandard2.0/AWSSDK.SQS.dll",
+        "lib/netstandard2.0/AWSSDK.SQS.pdb",
+        "lib/netstandard2.0/AWSSDK.SQS.xml",
         "tools/install.ps1",
         "tools/uninstall.ps1"
       ]
@@ -9782,7 +9830,8 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "AWSSDK.Extensions.NETCore.Setup >= 3.7.400",
-      "AWSSDK.S3 >= 3.7.415.7",
+      "AWSSDK.S3 >= 3.7.415.14",
+      "AWSSDK.SQS >= 3.7.400.109",
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
       "DotNetEnv >= 3.1.1",
@@ -9850,7 +9899,11 @@
           },
           "AWSSDK.S3": {
             "target": "Package",
-            "version": "[3.7.415.7, )"
+            "version": "[3.7.415.14, )"
+          },
+          "AWSSDK.SQS": {
+            "target": "Package",
+            "version": "[3.7.400.109, )"
           },
           "AutoMapper": {
             "target": "Package",
