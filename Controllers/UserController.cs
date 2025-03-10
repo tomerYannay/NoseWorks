@@ -170,6 +170,7 @@ namespace MyFirstMvcApp.Controllers
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var resetLink = Url.Action("ResetPassword", "User", new { token, email = user.Email }, Request.Scheme);
+            var resetPasswordPageUrl = resetLink.Replace("localhost:5279", "54.93.49.108:5173/reset_password");
 
             // Send email
             await _emailSender.SendEmailAsync(user.Email, "Reset Password", $"Please reset your password by clicking here: {resetLink}");
