@@ -170,10 +170,10 @@ namespace MyFirstMvcApp.Controllers
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var resetLink = Url.Action("ResetPassword", "User", new { token, email = user.Email }, Request.Scheme);
-            var resetPasswordPageUrl = resetLink.Replace("localhost:5279", "54.93.49.108:5173/reset_password");
+            var resetPasswordPageUrl = $"http://54.93.49.108:5173/reset_password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
 
             // Send email
-            await _emailSender.SendEmailAsync(user.Email, "Reset Password", $"Please reset your password by clicking here: {resetLink}");
+            await _emailSender.SendEmailAsync(user.Email, "Reset Password", $"Please reset your password by clicking here: {resetPasswordPageUrl}");
 
             return Ok("Password reset link has been sent to your email.");
         }
@@ -210,6 +210,35 @@ namespace MyFirstMvcApp.Controllers
                 return NotFound();
             }
             return Ok(user);
+        }
+
+        // PUT: api/User/ResetPassword
+        [HttpPut("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+            if (result.Succeeded)
+            {
+                return Ok("Password reset successfully.");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
         }
 
         // // PUT: api/User/5
