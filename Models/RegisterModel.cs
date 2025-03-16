@@ -4,6 +4,7 @@ namespace MyFirstMvcApp.Models
 {
     public class RegisterModel
     {
+        [Key]
         [Required]
         [EmailAddress]
         public string Email { get; set; }
