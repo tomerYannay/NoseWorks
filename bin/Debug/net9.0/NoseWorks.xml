@@ -14,7 +14,7 @@
             Retrieves a specific session by ID.
             </summary>
         </member>
-        <member name="M:MyFirstMvcApp.Controllers.SessionController.CreateSession(MyFirstMvcApp.Models.Session)">
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.CreateSession(MyFirstMvcApp.Models.Session,System.String)">
             <summary>
             Creates a new session.
             </summary>
@@ -39,28 +39,21 @@
             Retrieves the DPrime score of a session by ID.
             </summary>
         </member>
-        <member name="T:NoseWorks.Migrations.AddVisitedLocations2">
+        <member name="M:MyFirstMvcApp.Controllers.SessionController.GetSessionsByUserId(System.String)">
+            <summary>
+            Retrieves all sessions by user ID.
+            </summary>
+        </member>
+        <member name="T:NoseWorks.Migrations.initialCreate">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.AddVisitedLocations2.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.initialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.AddVisitedLocations2.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:NoseWorks.Migrations.initialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:NoseWorks.Migrations.AddVisitedLocations2.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:NoseWorks.Migrations.updateResetPassword">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.updateResetPassword.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.updateResetPassword.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:NoseWorks.Migrations.updateResetPassword.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:NoseWorks.Migrations.initialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

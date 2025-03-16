@@ -9,6 +9,7 @@
       "NoseWorks/1.0.0": {
         "dependencies": {
           "AWSSDK.Extensions.NETCore.Setup": "3.7.400",
+          "AWSSDK.Lambda": "3.7.411.56",
           "AWSSDK.S3": "3.7.415.14",
           "AWSSDK.SQS": "3.7.400.109",
           "AutoMapper": "12.0.1",
@@ -24,6 +25,7 @@
           "Moq": "4.16.1",
           "Newtonsoft.Json": "13.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.3",
+          "Polly": "8.5.2",
           "Swashbuckle.AspNetCore": "7.2.0",
           "xunit": "2.4.1",
           "xunit.runner.visualstudio": "2.4.3"
@@ -55,17 +57,17 @@
           }
         }
       },
-      "AWSSDK.Core/3.7.402.15": {
+      "AWSSDK.Core/3.7.402.19": {
         "runtime": {
           "lib/net8.0/AWSSDK.Core.dll": {
             "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.7.402.15"
+            "fileVersion": "3.7.402.19"
           }
         }
       },
       "AWSSDK.Extensions.NETCore.Setup/3.7.400": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.402.15",
+          "AWSSDK.Core": "3.7.402.19",
           "Microsoft.Extensions.Configuration.Abstractions": "9.0.1",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.1",
           "Microsoft.Extensions.Logging.Abstractions": "9.0.1"
@@ -77,9 +79,20 @@
           }
         }
       },
+      "AWSSDK.Lambda/3.7.411.56": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.402.19"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Lambda.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.411.56"
+          }
+        }
+      },
       "AWSSDK.S3/3.7.415.14": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.402.15"
+          "AWSSDK.Core": "3.7.402.19"
         },
         "runtime": {
           "lib/net8.0/AWSSDK.S3.dll": {
@@ -90,7 +103,7 @@
       },
       "AWSSDK.SQS/3.7.400.109": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.402.15"
+          "AWSSDK.Core": "3.7.402.19"
         },
         "runtime": {
           "lib/net8.0/AWSSDK.SQS.dll": {
@@ -818,6 +831,25 @@
           "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "assemblyVersion": "9.0.3.0",
             "fileVersion": "9.0.3.0"
+          }
+        }
+      },
+      "Polly/8.5.2": {
+        "dependencies": {
+          "Polly.Core": "8.5.2"
+        },
+        "runtime": {
+          "lib/net6.0/Polly.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.5.2.4319"
+          }
+        }
+      },
+      "Polly.Core/8.5.2": {
+        "runtime": {
+          "lib/net8.0/Polly.Core.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.5.2.4319"
           }
         }
       },
@@ -1750,12 +1782,12 @@
       "path": "automapper.extensions.microsoft.dependencyinjection/12.0.1",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512"
     },
-    "AWSSDK.Core/3.7.402.15": {
+    "AWSSDK.Core/3.7.402.19": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DTPVxvjHbL5tb8rcqNxDGaYF+2zON+2OECeGiAqAQidi49EBoRvuXD7USuDFO0+bZpIxtSh1XCMTBysug1OiXw==",
-      "path": "awssdk.core/3.7.402.15",
-      "hashPath": "awssdk.core.3.7.402.15.nupkg.sha512"
+      "sha512": "sha512-QNxPperAlN9LyZQ3XwQtGI3I3XeULucGzqI3PngR6jxNvwJTD++YyklL/6o2Q3CRfVmnj7noXh+nhiXuQbA/Ig==",
+      "path": "awssdk.core/3.7.402.19",
+      "hashPath": "awssdk.core.3.7.402.19.nupkg.sha512"
     },
     "AWSSDK.Extensions.NETCore.Setup/3.7.400": {
       "type": "package",
@@ -1763,6 +1795,13 @@
       "sha512": "sha512-i4ta6n+QuGKt1RBCIbRU2wohz5DYJ+wRPR9EI7YkzC8eaWSbmMXTNL+s4HpYUsoxM7uyUrYoW0gC52/9KnK7xw==",
       "path": "awssdk.extensions.netcore.setup/3.7.400",
       "hashPath": "awssdk.extensions.netcore.setup.3.7.400.nupkg.sha512"
+    },
+    "AWSSDK.Lambda/3.7.411.56": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QdBi5OfRVzUdJtKQ7lA2L8upWQgEAYpF7ay8ibJ+UOO7hV6uCpXuteVbTJRt8tD0MHL47jI6Q/2a0NIVK80axg==",
+      "path": "awssdk.lambda/3.7.411.56",
+      "hashPath": "awssdk.lambda.3.7.411.56.nupkg.sha512"
     },
     "AWSSDK.S3/3.7.415.14": {
       "type": "package",
@@ -2169,6 +2208,20 @@
       "sha512": "sha512-1A6HpMPbzK+quxdtug1aDHI4BSRTgpi7OaDt8WQh7SFJd2sSQ0nNTZ7sYrwyxVf4AdKdN7XJL9tpiiJjRUaa4g==",
       "path": "npgsql.entityframeworkcore.postgresql/9.0.3",
       "hashPath": "npgsql.entityframeworkcore.postgresql.9.0.3.nupkg.sha512"
+    },
+    "Polly/8.5.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vbXsGgkG86nG+TOwY+SmtrGrRHmHH0DQaxtILx//d3Dz/ocJ8izSNYzdvU2gEtWa/LDD8zJLvD3HdjEkdlvkhg==",
+      "path": "polly/8.5.2",
+      "hashPath": "polly.8.5.2.nupkg.sha512"
+    },
+    "Polly.Core/8.5.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1MJKdxv4zwDmiWvYvVN24DsrWUfgQ4F83voH8bhbtLMdPuGy8CfTUzsgQhvyrl1a7hrM6f/ydwLVdVUI0xooUw==",
+      "path": "polly.core/8.5.2",
+      "hashPath": "polly.core.8.5.2.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
       "type": "package",

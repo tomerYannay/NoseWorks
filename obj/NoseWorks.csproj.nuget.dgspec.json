@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[3.7.400, )"
             },
+            "AWSSDK.Lambda": {
+              "target": "Package",
+              "version": "[3.7.411.56, )"
+            },
             "AWSSDK.S3": {
               "target": "Package",
               "version": "[3.7.415.14, )"
@@ -111,6 +115,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.5.2, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

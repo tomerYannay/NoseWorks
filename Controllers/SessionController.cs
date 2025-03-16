@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MyFirstMvcApp.Controllers
 {
@@ -16,10 +17,12 @@ namespace MyFirstMvcApp.Controllers
     public class SessionController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public SessionController(ApplicationDbContext context)
+        public SessionController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -50,13 +53,13 @@ namespace MyFirstMvcApp.Controllers
         /// Creates a new session.
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CreateSession([FromBody] Session session)
+        public async Task<IActionResult> CreateSession([FromBody] Session session, string userId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            session.UserId = userId;
             _context.Sessions.Add(session);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetSession), new { id = session.Id }, session);
@@ -140,6 +143,24 @@ namespace MyFirstMvcApp.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { DPrime = dPrime });
+        }
+
+        /// <summary>
+        /// Retrieves all sessions by user ID.
+        /// </summary>
+        [HttpGet("byUserId/{userId}")]
+        public async Task<IActionResult> GetSessionsByUserId(string userId)
+        {
+            var sessions = await _context.Sessions
+                .Where(s => s.UserId == userId)
+                .OrderByDescending(s => s.Date) // Order by date descending
+                .ToListAsync();
+
+            if (sessions == null || !sessions.Any())
+            {
+                return NotFound($"No sessions found for user with ID {userId}.");
+            }
+            return Ok(sessions);
         }
     }
 }

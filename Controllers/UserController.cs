@@ -64,10 +64,10 @@ namespace MyFirstMvcApp.Controllers
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var relativeUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token }, Request.Scheme);
-                var confirmationLink = relativeUrl.Replace("localhost:5279", "54.93.49.108:5173");
+                // var confirmationLink = relativeUrl.Replace("localhost:5279", "54.93.49.108:5173");
                 
                 // Send email
-                await _emailSender.SendEmailAsync(user.Email, "Confirm your email", $"Please confirm your email by clicking here: {confirmationLink}");
+                await _emailSender.SendEmailAsync(user.Email, "Confirm your email", $"Please confirm your email by clicking here: {relativeUrl}");
 
                 return CreatedAtAction("GetUser", new { id = user.Id }, user);
             }
@@ -82,6 +82,7 @@ namespace MyFirstMvcApp.Controllers
 
 
         // GET: api/User/ConfirmEmail
+        
         [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {

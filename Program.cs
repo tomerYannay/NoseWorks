@@ -14,6 +14,7 @@ using Amazon.S3;
 using Amazon.SQS;
 using DotNetEnv;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 
 // Load environment variables from .env file
 Env.Load();
@@ -82,13 +83,25 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 1;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequiredUniqueChars = 0;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+// builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//         .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
@@ -113,6 +126,11 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 100000000; // 100 MB
+});
+
 // Add AWS S3 and SQS services using environment variables
 builder.Services.AddDefaultAWSOptions(new AWSOptions
 {
@@ -124,6 +142,7 @@ builder.Services.AddDefaultAWSOptions(new AWSOptions
 builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddAWSService<IAmazonSQS>();
 
+
 // Register the background service
 builder.Services.AddHostedService<SqsBackgroundService>(provider =>
 {
@@ -132,7 +151,7 @@ builder.Services.AddHostedService<SqsBackgroundService>(provider =>
     var logger = provider.GetRequiredService<ILogger<SqsBackgroundService>>();
     var serviceProvider = provider.GetRequiredService<IServiceProvider>();
     var queueUrl = "https://sqs.eu-central-1.amazonaws.com/931894660086/noseWorks"; // Keep the queue URL
-    return new SqsBackgroundService(sqsClient, s3Client, logger, queueUrl, serviceProvider);
+    return new SqsBackgroundService(sqsClient, s3Client, queueUrl, serviceProvider, logger);
 });
 
 var app = builder.Build();

@@ -28,5 +28,9 @@ namespace MyFirstMvcApp.Models
         public List<string> FinalResults { get; set; } = new List<string>();
 
         public float DPrimeScore { get; set; }
+        
+        // Add UserId to associate with a user
+        [Required]
+        public string UserId { get; set; }
     }
 }

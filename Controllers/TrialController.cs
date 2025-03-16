@@ -15,7 +15,13 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
+using Polly;
+using Polly.Retry;
+using System.Net.Http;
+using System.Text.Json;
+using Amazon.S3.Model;
 
 namespace MyFirstMvcApp.Controllers
 {
@@ -26,6 +32,8 @@ namespace MyFirstMvcApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IAmazonS3 _s3Client;
+
+        private static readonly HttpClient client = new HttpClient { Timeout = TimeSpan.FromMinutes(10) }; // Increase timeout
 
         public TrialController(IAmazonS3 s3Client, ApplicationDbContext context)
         {
@@ -208,20 +216,27 @@ namespace MyFirstMvcApp.Controllers
             var bucketName = "noseworks";
             var keyName = $"{trialId}/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
-            // Save the file to a temporary location
-            var uploadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads");
-            if (!Directory.Exists(uploadDirectory))
+            using (var s3Client = new AmazonS3Client())
+            using (var transferUtility = new TransferUtility(s3Client))
+            using (var fileStream = file.OpenReadStream()) // Directly read the file
             {
-                Directory.CreateDirectory(uploadDirectory);
-            }
-            var filePath = Path.Combine(uploadDirectory, file.FileName);
+                var uploadRequest = new TransferUtilityUploadRequest
+                {
+                    InputStream = fileStream,
+                    BucketName = bucketName,
+                    Key = keyName,
+                    ContentType = file.ContentType
+                };
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
+                await transferUtility.UploadAsync(uploadRequest);
             }
 
-            // Send a message to the SQS queue with the necessary information
+            // Update the trial with the video URL
+            trial.VideoUrl = $"https://{bucketName}.s3.amazonaws.com/{keyName}";
+            _context.Trials.Update(trial);
+            await _context.SaveChangesAsync();
+
+            // Send a message to SQS queue
             var sqsClient = new AmazonSQSClient();
             var queueUrl = "https://sqs.eu-central-1.amazonaws.com/931894660086/noseWorks";
             var messageBody = new
@@ -240,8 +255,120 @@ namespace MyFirstMvcApp.Controllers
 
             await sqsClient.SendMessageAsync(sendMessageRequest);
 
-            return Ok(new { Message = "Video upload request has been queued." });
+            
+            return Ok(new { Message = "Video uploaded successfully and request has been queued." });
         }
+
+        // New method to generate a pre-signed URL
+        [HttpGet("getPresignedUrl/{trialId}")]
+        public async Task<IActionResult> GetPresignedUrl(int trialId, [FromQuery] string fileName)
+        {
+            var trial = await _context.Trials.FindAsync(trialId);
+            if (trial == null)
+            {
+                return NotFound($"Trial with ID {trialId} not found.");
+            }
+
+            var bucketName = "noseworks";
+            var keyName = $"{trialId}/{Guid.NewGuid()}{Path.GetExtension(fileName)}";
+
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = bucketName,
+                Key = keyName,
+                Expires = DateTime.UtcNow.AddMinutes(45), // Set the expiration time for the pre-signed URL
+                Verb = HttpVerb.PUT,
+                ContentType = "video/mp4" // Set the content type
+            };
+
+            var presignedUrl = _s3Client.GetPreSignedURL(request);
+
+            return Ok(new { Url = presignedUrl, KeyName = keyName });
+        }
+
+        // // POST: api/Trial/uploadVideo/{trialId}
+        // [HttpPost("uploadVideo/{trialId}")]
+        // public async Task<IActionResult> UploadVideo(int trialId, IFormFile file)
+        // {
+        //     if (file == null || file.Length == 0)
+        //     {
+        //         return BadRequest("No file uploaded.");
+        //     }
+
+        //     var trial = await _context.Trials.FindAsync(trialId);
+        //     if (trial == null)
+        //     {
+        //         return NotFound($"Trial with ID {trialId} not found.");
+        //     }
+
+        //     var fileName = file.FileName;
+
+        //     // Read the file content
+        //     byte[] fileContent;
+        //     using (var memoryStream = new MemoryStream())
+        //     {
+        //         await file.CopyToAsync(memoryStream);
+        //         fileContent = memoryStream.ToArray();
+        //     }
+
+        //     // Get the pre-signed URL from the Lambda function
+        //     var presignedUrl = await GetPresignedUrl(fileName, trialId);
+
+        //     // Upload the video using the pre-signed URL
+        //     await UploadVideo(presignedUrl, file);
+
+        //     // Send a message to SQS queue
+        //     var sqsClient = new AmazonSQSClient();
+        //     var queueUrl = "https://sqs.eu-central-1.amazonaws.com/931894660086/noseWorks";
+        //     var messageBody = new
+        //     {
+        //         TrialId = trialId,
+        //         BucketName = "noseworks",
+        //         KeyName = $"{trialId}/{fileName}",
+        //         FileName = fileName,
+        //         ContentType = file.ContentType,
+        //         FileContent = Convert.ToBase64String(fileContent) // Encode file content as Base64
+        //     };
+
+        //     var sendMessageRequest = new SendMessageRequest
+        //     {
+        //         QueueUrl = queueUrl,
+        //         MessageBody = JsonConvert.SerializeObject(messageBody)
+        //     };
+
+        //     await sqsClient.SendMessageAsync(sendMessageRequest);
+
+        //     return Ok(new { Message = "Video uploaded successfully and request has been queued." });
+        // }
+
+        // private async Task<string> GetPresignedUrl(string fileName, int trialId)
+        // {
+        //     var lambdaUrl = "https://7u3n3whgl8.execute-api.eu-central-1.amazonaws.com/upload-stage/uploadVideo";
+        //     var response = await client.GetAsync($"{lambdaUrl}?fileName={fileName}&trialId={trialId}");
+        //     response.EnsureSuccessStatusCode();
+        //     var responseBody = await response.Content.ReadAsStringAsync();
+        //     var json = JObject.Parse(responseBody);
+        //     return json["uploadUrl"].ToString();
+        // }
+
+        // private async Task UploadVideo(string presignedUrl, IFormFile file)
+        // {
+        //     var retryPolicy = Policy
+        //         .Handle<HttpRequestException>()
+        //         .OrResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
+        //         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+        //     await retryPolicy.ExecuteAsync(async () =>
+        //     {
+        //         using (var content = new StreamContent(file.OpenReadStream()))
+        //         {
+        //             content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+        //             var response = await client.PutAsync(presignedUrl, content);
+        //             response.EnsureSuccessStatusCode();
+        //             return response; // Ensure that the lambda expression returns a HttpResponseMessage
+        //         }
+        //     });
+        // }
 
         // GET: api/Trial/getVideo/{trialId}
         [HttpGet("getVideo/{trialId}")]

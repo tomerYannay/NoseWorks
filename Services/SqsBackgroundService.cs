@@ -20,13 +20,13 @@ public class SqsBackgroundService : BackgroundService
     private readonly string _queueUrl;
     private readonly IServiceProvider _serviceProvider;
 
-    public SqsBackgroundService(IAmazonSQS sqsClient, IAmazonS3 s3Client, ILogger<SqsBackgroundService> logger, string queueUrl, IServiceProvider serviceProvider)
+    public SqsBackgroundService(IAmazonSQS sqsClient, IAmazonS3 s3Client, string queueUrl, IServiceProvider serviceProvider, ILogger<SqsBackgroundService> logger)
     {
         _sqsClient = sqsClient;
         _s3Client = s3Client;
-        _logger = logger;
         _queueUrl = queueUrl;
         _serviceProvider = serviceProvider;
+        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -51,9 +51,21 @@ public class SqsBackgroundService : BackgroundService
                     var bucketName = (string)messageBody.BucketName;
                     var keyName = (string)messageBody.KeyName;
                     var fileName = (string)messageBody.FileName;
+                    var contentType = (string)messageBody.ContentType;
+                    var fileContentBase64 = (string)messageBody.FileContent;
+
+                    // Check if fileContentBase64 is null
+                    if (string.IsNullOrEmpty(fileContentBase64))
+                    {
+                        _logger.LogError("File content is missing in the message.");
+                        continue;
+                    }
+
+                    // Decode the file content from Base64
+                    var fileContent = Convert.FromBase64String(fileContentBase64);
 
                     // Process the video upload
-                    await ProcessVideoUpload(trialId, bucketName, keyName, fileName);
+                    await ProcessVideoUpload(trialId, bucketName, keyName, fileContent, contentType);
 
                     // Delete the message from the queue
                     var deleteMessageRequest = new DeleteMessageRequest
@@ -71,7 +83,7 @@ public class SqsBackgroundService : BackgroundService
         }
     }
 
-    private async Task ProcessVideoUpload(int trialId, string bucketName, string keyName, string fileName)
+    private async Task ProcessVideoUpload(int trialId, string bucketName, string keyName, byte[] fileContent, string contentType)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -85,28 +97,19 @@ public class SqsBackgroundService : BackgroundService
                 return;
             }
 
-            // Define the actual path where the uploaded files are stored
-            var uploadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads");
-            var filePath = Path.Combine(uploadDirectory, fileName);
-
-            // Ensure the upload directory exists
-            if (!Directory.Exists(uploadDirectory))
-            {
-                Directory.CreateDirectory(uploadDirectory);
-            }
-
             // Upload the video to S3
-            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (var memoryStream = new MemoryStream(fileContent))
             {
+                var fileTransferUtility = new TransferUtility(_s3Client);
                 var uploadRequest = new TransferUtilityUploadRequest
                 {
-                    InputStream = fileStream,
+                    InputStream = memoryStream,
                     Key = keyName,
                     BucketName = bucketName,
+                    ContentType = contentType,
                     CannedACL = S3CannedACL.PublicRead
                 };
-
-                var fileTransferUtility = new TransferUtility(_s3Client);
+                uploadRequest.PartSize = 10 * 1024 * 1024; 
                 await fileTransferUtility.UploadAsync(uploadRequest);
             }
 

@@ -31,7 +31,7 @@
           "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
-      "AWSSDK.Core/3.7.402.15": {
+      "AWSSDK.Core/3.7.402.19": {
         "type": "package",
         "compile": {
           "lib/net8.0/AWSSDK.Core.dll": {
@@ -60,6 +60,22 @@
         "runtime": {
           "lib/net8.0/AWSSDK.Extensions.NETCore.Setup.dll": {
             "related": ".pdb"
+          }
+        }
+      },
+      "AWSSDK.Lambda/3.7.411.56": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.7.402.19, 4.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.Lambda.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Lambda.dll": {
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -1260,6 +1276,35 @@
         "runtime": {
           "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "related": ".xml"
+          }
+        }
+      },
+      "Polly/8.5.2": {
+        "type": "package",
+        "dependencies": {
+          "Polly.Core": "8.5.2"
+        },
+        "compile": {
+          "lib/net6.0/Polly.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Polly.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Polly.Core/8.5.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Polly.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Polly.Core.dll": {
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -3095,15 +3140,15 @@
         "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
       ]
     },
-    "AWSSDK.Core/3.7.402.15": {
-      "sha512": "DTPVxvjHbL5tb8rcqNxDGaYF+2zON+2OECeGiAqAQidi49EBoRvuXD7USuDFO0+bZpIxtSh1XCMTBysug1OiXw==",
+    "AWSSDK.Core/3.7.402.19": {
+      "sha512": "QNxPperAlN9LyZQ3XwQtGI3I3XeULucGzqI3PngR6jxNvwJTD++YyklL/6o2Q3CRfVmnj7noXh+nhiXuQbA/Ig==",
       "type": "package",
-      "path": "awssdk.core/3.7.402.15",
+      "path": "awssdk.core/3.7.402.19",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "awssdk.core.3.7.402.15.nupkg.sha512",
+        "awssdk.core.3.7.402.19.nupkg.sha512",
         "awssdk.core.nuspec",
         "images/AWSLogo.png",
         "lib/net35/AWSSDK.Core.dll",
@@ -3140,6 +3185,38 @@
         "lib/netcoreapp3.1/AWSSDK.Extensions.NETCore.Setup.pdb",
         "lib/netstandard2.0/AWSSDK.Extensions.NETCore.Setup.dll",
         "lib/netstandard2.0/AWSSDK.Extensions.NETCore.Setup.pdb"
+      ]
+    },
+    "AWSSDK.Lambda/3.7.411.56": {
+      "sha512": "QdBi5OfRVzUdJtKQ7lA2L8upWQgEAYpF7ay8ibJ+UOO7hV6uCpXuteVbTJRt8tD0MHL47jI6Q/2a0NIVK80axg==",
+      "type": "package",
+      "path": "awssdk.lambda/3.7.411.56",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.Lambda.CodeAnalysis.dll",
+        "analyzers/dotnet/cs/SharedAnalysisCode.dll",
+        "awssdk.lambda.3.7.411.56.nupkg.sha512",
+        "awssdk.lambda.nuspec",
+        "images/AWSLogo.png",
+        "lib/net35/AWSSDK.Lambda.dll",
+        "lib/net35/AWSSDK.Lambda.pdb",
+        "lib/net35/AWSSDK.Lambda.xml",
+        "lib/net45/AWSSDK.Lambda.dll",
+        "lib/net45/AWSSDK.Lambda.pdb",
+        "lib/net45/AWSSDK.Lambda.xml",
+        "lib/net8.0/AWSSDK.Lambda.dll",
+        "lib/net8.0/AWSSDK.Lambda.pdb",
+        "lib/net8.0/AWSSDK.Lambda.xml",
+        "lib/netcoreapp3.1/AWSSDK.Lambda.dll",
+        "lib/netcoreapp3.1/AWSSDK.Lambda.pdb",
+        "lib/netcoreapp3.1/AWSSDK.Lambda.xml",
+        "lib/netstandard2.0/AWSSDK.Lambda.dll",
+        "lib/netstandard2.0/AWSSDK.Lambda.pdb",
+        "lib/netstandard2.0/AWSSDK.Lambda.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "AWSSDK.S3/3.7.415.14": {
@@ -5605,6 +5682,59 @@
         "npgsql.entityframeworkcore.postgresql.9.0.3.nupkg.sha512",
         "npgsql.entityframeworkcore.postgresql.nuspec",
         "postgresql.png"
+      ]
+    },
+    "Polly/8.5.2": {
+      "sha512": "vbXsGgkG86nG+TOwY+SmtrGrRHmHH0DQaxtILx//d3Dz/ocJ8izSNYzdvU2gEtWa/LDD8zJLvD3HdjEkdlvkhg==",
+      "type": "package",
+      "path": "polly/8.5.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/Polly.dll",
+        "lib/net462/Polly.pdb",
+        "lib/net462/Polly.xml",
+        "lib/net472/Polly.dll",
+        "lib/net472/Polly.pdb",
+        "lib/net472/Polly.xml",
+        "lib/net6.0/Polly.dll",
+        "lib/net6.0/Polly.pdb",
+        "lib/net6.0/Polly.xml",
+        "lib/netstandard2.0/Polly.dll",
+        "lib/netstandard2.0/Polly.pdb",
+        "lib/netstandard2.0/Polly.xml",
+        "package-icon.png",
+        "package-readme.md",
+        "polly.8.5.2.nupkg.sha512",
+        "polly.nuspec"
+      ]
+    },
+    "Polly.Core/8.5.2": {
+      "sha512": "1MJKdxv4zwDmiWvYvVN24DsrWUfgQ4F83voH8bhbtLMdPuGy8CfTUzsgQhvyrl1a7hrM6f/ydwLVdVUI0xooUw==",
+      "type": "package",
+      "path": "polly.core/8.5.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/Polly.Core.dll",
+        "lib/net462/Polly.Core.pdb",
+        "lib/net462/Polly.Core.xml",
+        "lib/net472/Polly.Core.dll",
+        "lib/net472/Polly.Core.pdb",
+        "lib/net472/Polly.Core.xml",
+        "lib/net6.0/Polly.Core.dll",
+        "lib/net6.0/Polly.Core.pdb",
+        "lib/net6.0/Polly.Core.xml",
+        "lib/net8.0/Polly.Core.dll",
+        "lib/net8.0/Polly.Core.pdb",
+        "lib/net8.0/Polly.Core.xml",
+        "lib/netstandard2.0/Polly.Core.dll",
+        "lib/netstandard2.0/Polly.Core.pdb",
+        "lib/netstandard2.0/Polly.Core.xml",
+        "package-icon.png",
+        "package-readme.md",
+        "polly.core.8.5.2.nupkg.sha512",
+        "polly.core.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
@@ -9830,6 +9960,7 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "AWSSDK.Extensions.NETCore.Setup >= 3.7.400",
+      "AWSSDK.Lambda >= 3.7.411.56",
       "AWSSDK.S3 >= 3.7.415.14",
       "AWSSDK.SQS >= 3.7.400.109",
       "AutoMapper >= 12.0.1",
@@ -9845,6 +9976,7 @@
       "Moq >= 4.16.1",
       "Newtonsoft.Json >= 13.0.3",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.3",
+      "Polly >= 8.5.2",
       "Swashbuckle.AspNetCore >= 7.2.0",
       "xunit >= 2.4.1",
       "xunit.runner.visualstudio >= 2.4.3"
@@ -9896,6 +10028,10 @@
           "AWSSDK.Extensions.NETCore.Setup": {
             "target": "Package",
             "version": "[3.7.400, )"
+          },
+          "AWSSDK.Lambda": {
+            "target": "Package",
+            "version": "[3.7.411.56, )"
           },
           "AWSSDK.S3": {
             "target": "Package",
@@ -9960,6 +10096,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[9.0.3, )"
+          },
+          "Polly": {
+            "target": "Package",
+            "version": "[8.5.2, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
