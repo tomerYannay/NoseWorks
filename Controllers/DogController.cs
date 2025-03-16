@@ -48,13 +48,13 @@ namespace MyFirstMvcApp.Controllers
 
         // POST: api/Dog
         [HttpPost]
-        public async Task<IActionResult> CreateDog([FromBody] Dog dog)
+        public async Task<IActionResult> CreateDog([FromBody] Dog dog, string userId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            dog.UserId = userId;
             _context.Dogs.Add(dog);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetDog), new { id = dog.Id }, dog);
@@ -164,5 +164,21 @@ namespace MyFirstMvcApp.Controllers
             return Ok(new { ImageUrl = dog.ImageUrl });
         }
 
+        /// <summary>
+        /// Retrieves all dogs by user ID.
+        /// </summary>
+        [HttpGet("byUserId/{userId}")]
+        public async Task<IActionResult> GetDogsByUserId(string userId)
+        {
+            var dogs = await _context.Dogs
+                .Where(s => s.UserId == userId)
+                .ToListAsync();
+
+            if (dogs == null || !dogs.Any())
+            {
+                return NotFound($"No dogs found for user with ID {userId}.");
+            }
+            return Ok(dogs);
+        }
     }
 }

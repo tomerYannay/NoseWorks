@@ -14,7 +14,10 @@ namespace MyFirstMvcApp.Models{
         public DateTime DateOfBirth {get; set; }
 
         public string ImageUrl { get; set; }
-
+        
+        // Add UserId to associate with a user
+        [Required]
+        public string UserId { get; set; }
     }
     
 }
