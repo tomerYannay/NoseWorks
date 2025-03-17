@@ -121,6 +121,12 @@ namespace MyFirstMvcApp.Controllers
                 return Unauthorized("Invalid login attempt.");
             }
 
+            // ✅ Check if the user's email is confirmed before allowing login
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return Unauthorized("Email is not confirmed. Please check your email to verify your account.");
+            }
+
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
             if (!result.Succeeded)
             {
