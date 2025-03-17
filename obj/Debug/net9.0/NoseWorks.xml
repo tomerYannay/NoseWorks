@@ -4,6 +4,11 @@
         <name>NoseWorks</name>
     </assembly>
     <members>
+        <member name="M:MyFirstMvcApp.Controllers.DogController.GetDogsByUserId(System.String)">
+            <summary>
+            Retrieves all dogs by user ID.
+            </summary>
+        </member>
         <member name="M:MyFirstMvcApp.Controllers.SessionController.GetSessions">
             <summary>
             Retrieves all sessions.

@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NoseWorks.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250316153636_initialCreate")]
+    [Migration("20250317095826_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -242,6 +242,10 @@ namespace NoseWorks.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
