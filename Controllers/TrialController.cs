@@ -271,14 +271,19 @@ namespace MyFirstMvcApp.Controllers
 
             var bucketName = "noseworks";
             var keyName = $"{trialId}/{Guid.NewGuid()}{Path.GetExtension(fileName)}";
-
+            var extension = Path.GetExtension(fileName).ToLower();
+            var contentType = "video/mp4";
+            if (extension == ".mov")
+            {
+                contentType = "video/quicktime";
+            }
             var request = new GetPreSignedUrlRequest
             {
                 BucketName = bucketName,
                 Key = keyName,
                 Expires = DateTime.UtcNow.AddMinutes(45), // Set the expiration time for the pre-signed URL
                 Verb = HttpVerb.PUT,
-                ContentType = "video/mp4" // Set the content type
+                ContentType = contentType
             };
 
             var presignedUrl = _s3Client.GetPreSignedURL(request);

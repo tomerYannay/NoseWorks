@@ -16,6 +16,8 @@ namespace MyFirstMvcApp.Data
         public DbSet<Dog> Dogs { get; set; }
         public DbSet<TrainingProgram> TrainingPrograms { get; set; }
         public DbSet<Trial> Trials { get; set; } 
+
+        public DbSet<RegisterModel> RegisterUsers { get; set; }
         
     }
 }
