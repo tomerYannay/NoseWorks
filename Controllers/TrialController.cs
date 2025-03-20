@@ -450,14 +450,8 @@ namespace MyFirstMvcApp.Controllers
 
         // PUT: api/Trial/updateVideoUrl/{trialId}
         [HttpPut("updateVideoUrl/{trialId}")]
-        public async Task<IActionResult> UpdateTrialVideoUrl(int trialId, [FromBody] JObject data)
+        public async Task<IActionResult> UpdateTrialVideoUrl(int trialId, [FromBody] string videoUrl)
         {
-            if (data == null || !data.ContainsKey("videoUrl"))
-            {
-                return BadRequest("Invalid request. 'videoUrl' is required.");
-            }
-
-            var videoUrl = data["videoUrl"]?.ToString();
             if (string.IsNullOrEmpty(videoUrl))
             {
                 return BadRequest("Video URL cannot be empty.");
