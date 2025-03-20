@@ -180,5 +180,50 @@ namespace MyFirstMvcApp.Controllers
             }
             return Ok(dogs);
         }
+
+        [HttpGet("analysis/{dogId}")]
+        public async Task<IActionResult> GetDogAnalysis(int dogId)
+        {
+            // Retrieve all sessions related to the given dogId
+            var sessions = await _context.Sessions
+                .Where(s => s.DogId == dogId)
+                .ToListAsync();
+
+            if (sessions == null || !sessions.Any())
+            {
+                return NotFound($"No sessions found for Dog ID {dogId}.");
+            }
+
+            // Extract list of DPrime scores
+            var dprimes = sessions.Select(s => s.DPrimeScore).ToList();
+
+            // Initialize counters
+            int hitCount = 0;
+            int missCount = 0;
+            int totalTrials = 0;
+
+            foreach (var session in sessions)
+            {
+                if (session.FinalResults != null)
+                {
+                    hitCount += session.FinalResults.Count(result => result == "H");
+                    missCount += session.FinalResults.Count(result => result == "M");
+                }
+                totalTrials += session.NumberOfTrials; // Sum up the total trials from all sessions
+            }
+
+            // Return the analysis as JSON
+            return Ok(new
+            {
+                DogId = dogId,
+                NumberOfSessions = sessions.Count, // Total number of sessions
+                TotalTrials = totalTrials, // Total number of trials across all sessions
+                DPrimes = dprimes,
+                HitCount = hitCount,
+                MissCount = missCount
+            });
+        }
+
+
     }
 }
