@@ -447,5 +447,35 @@ namespace MyFirstMvcApp.Controllers
 
             return Ok(trials);
         }
+
+        // PUT: api/Trial/updateVideoUrl/{trialId}
+        [HttpPut("updateVideoUrl/{trialId}")]
+        public async Task<IActionResult> UpdateTrialVideoUrl(int trialId, [FromBody] JObject data)
+        {
+            if (data == null || !data.ContainsKey("videoUrl"))
+            {
+                return BadRequest("Invalid request. 'videoUrl' is required.");
+            }
+
+            var videoUrl = data["videoUrl"]?.ToString();
+            if (string.IsNullOrEmpty(videoUrl))
+            {
+                return BadRequest("Video URL cannot be empty.");
+            }
+
+            var trial = await _context.Trials.FindAsync(trialId);
+            if (trial == null)
+            {
+                return NotFound($"Trial with ID {trialId} not found.");
+            }
+
+            trial.VideoUrl = videoUrl;
+
+            _context.Trials.Update(trial);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { Message = "Video URL updated successfully.", TrialId = trialId, VideoUrl = videoUrl });
+        }
+
     }
 }
