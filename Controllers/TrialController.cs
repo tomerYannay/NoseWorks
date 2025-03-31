@@ -32,13 +32,18 @@ namespace MyFirstMvcApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IAmazonS3 _s3Client;
+        private readonly IAmazonSQS _sqsClient;
+        private const string BucketName = "noseworks";
+        private const string QueueUrl = "https://sqs.eu-central-1.amazonaws.com/931894660086/noseWorks";
+
 
         private static readonly HttpClient client = new HttpClient { Timeout = TimeSpan.FromMinutes(10) }; // Increase timeout
 
-        public TrialController(IAmazonS3 s3Client, ApplicationDbContext context)
+        public TrialController(IAmazonS3 s3Client,IAmazonSQS sqsClient, ApplicationDbContext context)
         {
             _s3Client = s3Client;
             _context = context;
+            _sqsClient = sqsClient;
         }
 
         // GET: api/Trial
@@ -469,6 +474,74 @@ namespace MyFirstMvcApp.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { Message = "Video URL updated successfully.", TrialId = trialId, VideoUrl = videoUrl });
+        }
+
+        [HttpGet("start")]
+        public async Task<IActionResult> StartUpload([FromQuery] string fileName, [FromQuery] string trialId)
+        {
+            var key = $"{trialId}/{fileName}";
+            var request = new InitiateMultipartUploadRequest
+            {
+                BucketName = BucketName,
+                Key = key,
+                ContentType = "video/mp4",
+                CannedACL = S3CannedACL.PublicRead
+            };
+
+            var response = await _s3Client.InitiateMultipartUploadAsync(request);
+            return Ok(new { uploadId = response.UploadId, key });
+        }
+
+        [HttpGet("part")]
+        public IActionResult GetPresignedPartUrl([FromQuery] string fileName, [FromQuery] string trialId,
+                                                [FromQuery] string uploadId, [FromQuery] int partNumber)
+        {
+            var key = $"{trialId}/{fileName}";
+
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = BucketName,
+                Key = key,
+                Verb = HttpVerb.PUT,
+                Expires = DateTime.UtcNow.AddHours(1),
+                UploadId = uploadId,
+                PartNumber = partNumber
+            };
+
+            var url = _s3Client.GetPreSignedURL(request);
+            return Ok(new { url });
+        }
+
+        [HttpPost("complete")]
+        public async Task<IActionResult> CompleteUpload([FromQuery] string fileName, [FromQuery] string trialId,
+                                                        [FromQuery] string uploadId, [FromBody] List<PartETag> parts)
+        {
+            var key = $"{trialId}/{fileName}";
+            var request = new CompleteMultipartUploadRequest
+            {
+                BucketName = BucketName,
+                Key = key,
+                UploadId = uploadId
+            };
+            request.AddPartETags(parts);
+
+            var result = await _s3Client.CompleteMultipartUploadAsync(request);
+
+            // Optional: Send to SQS
+            var messageBody = new
+            {
+                TrialId = trialId,
+                KeyName = key,
+                BucketName
+            };
+
+            await _sqsClient.SendMessageAsync(new SendMessageRequest
+            {
+                QueueUrl = QueueUrl,
+                MessageBody = JsonConvert.SerializeObject(messageBody)
+            });
+
+            return Ok(new { location = result.Location });
         }
 
     }

@@ -118,7 +118,7 @@ namespace MyFirstMvcApp.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return Unauthorized("Invalid login attempt.");
+                return Unauthorized("User not found.");
             }
 
             // ✅ Check if the user's email is confirmed before allowing login
@@ -135,6 +135,15 @@ namespace MyFirstMvcApp.Controllers
             }
 
             var token = GenerateJwtToken(user);
+
+            // ✅ Set token in secure HttpOnly cookie
+            Response.Cookies.Append("access_token", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true, // Use HTTPS in production!
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTimeOffset.UtcNow.AddDays(2)
+            });
 
             return Ok(new { Token = token });
         }
