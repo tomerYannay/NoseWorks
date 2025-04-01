@@ -21,8 +21,8 @@ namespace MyFirstMvcApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
         private readonly IMapper _mapper;
@@ -30,8 +30,8 @@ namespace MyFirstMvcApp.Controllers
 
         public UserController(
             ApplicationDbContext context,
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             IMapper mapper,
             ILogger<UserController> logger,
@@ -57,7 +57,13 @@ namespace MyFirstMvcApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser { UserName = model.Name, Name = model.Name, Email = model.Email };
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                Name = model.Name 
+            };
+
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
@@ -71,18 +77,26 @@ namespace MyFirstMvcApp.Controllers
 
                 return CreatedAtAction("GetUser", new { id = user.Id }, user);
             }
-
+            
             foreach (var error in result.Errors)
             {
+                // Filter out both Identity's default messages
+                if (error.Code == "DuplicateUserName" || error.Code == "DuplicateEmail")
+                    continue;
+
                 ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            // Add our own clean version just once
+            if (result.Errors.Any(e => e.Code == "DuplicateUserName" || e.Code == "DuplicateEmail"))
+            {
+                ModelState.AddModelError(nameof(model.Email), $"Email '{model.Email}' is already taken.");
             }
 
             return BadRequest(ModelState);
         }
 
-
         // GET: api/User/ConfirmEmail
-        
         [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {

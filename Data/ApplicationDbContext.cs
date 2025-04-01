@@ -5,7 +5,7 @@ using MyFirstMvcApp.Models;
 
 namespace MyFirstMvcApp.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -16,8 +16,6 @@ namespace MyFirstMvcApp.Data
         public DbSet<Dog> Dogs { get; set; }
         public DbSet<TrainingProgram> TrainingPrograms { get; set; }
         public DbSet<Trial> Trials { get; set; } 
-
-        public DbSet<RegisterModel> RegisterUsers { get; set; }
         
     }
 }

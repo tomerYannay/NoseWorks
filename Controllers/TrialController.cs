@@ -36,7 +36,6 @@ namespace MyFirstMvcApp.Controllers
         private const string BucketName = "noseworks";
         private const string QueueUrl = "https://sqs.eu-central-1.amazonaws.com/931894660086/noseWorks";
 
-
         private static readonly HttpClient client = new HttpClient { Timeout = TimeSpan.FromMinutes(10) }; // Increase timeout
 
         public TrialController(IAmazonS3 s3Client,IAmazonSQS sqsClient, ApplicationDbContext context)
