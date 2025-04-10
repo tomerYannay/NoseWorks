@@ -194,22 +194,34 @@ namespace MyFirstMvcApp.Controllers
                 return NotFound($"No sessions found for Dog ID {dogId}.");
             }
 
+            var sessionIds = sessions.Select(s => s.Id).ToList();
+
+            // Get all training programs linked to those sessions
+            var trainingPrograms = await _context.TrainingPrograms
+                .Where(tp => sessionIds.Contains(tp.SessionId))
+                .ToListAsync();
+
+            var trainingProgramIds = trainingPrograms.Select(tp => tp.Id).ToList();
+
+            var totalTrials = await _context.Trials
+            .CountAsync(t => trainingProgramIds.Contains(t.TrainingId));
+
             // Extract list of DPrime scores
             var dprimes = sessions.Select(s => s.DPrimeScore).ToList();
+
+            var lastDPrime = sessions.Last().DPrimeScore;
 
             // Initialize counters
             int hitCount = 0;
             int missCount = 0;
-            int totalTrials = 0;
 
             foreach (var session in sessions)
             {
                 if (session.FinalResults != null)
                 {
                     hitCount += session.FinalResults.Count(result => result == "H");
-                    missCount += session.FinalResults.Count(result => result == "M");
+                    missCount += session.FinalResults.Count(result => result != "H");
                 }
-                totalTrials += session.NumberOfTrials; // Sum up the total trials from all sessions
             }
 
             // Return the analysis as JSON
@@ -219,10 +231,12 @@ namespace MyFirstMvcApp.Controllers
                 NumberOfSessions = sessions.Count, // Total number of sessions
                 TotalTrials = totalTrials, // Total number of trials across all sessions
                 DPrimes = dprimes,
+                LastDPrime = lastDPrime,
                 HitCount = hitCount,
                 MissCount = missCount
             });
         }
 
     }
+
 }

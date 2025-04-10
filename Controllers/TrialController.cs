@@ -178,28 +178,27 @@ namespace MyFirstMvcApp.Controllers
 
         private string CalculateResult(int selectedLocation, int positiveLocation, int negativeLocation, ContainerType containerType)
         {
-            if (selectedLocation == positiveLocation)
+            // Case: dog chose nothing (skipped)
+            if (selectedLocation == 0)
             {
-                return "H"; // Hit: Correct selection
-            }
-            else if (selectedLocation == negativeLocation)
-            {
-                // False Accept (FA): Incorrect selection of negative location (if ContainerType is 1)
-                if (containerType == ContainerType.PositiveNegativeControl)
-                {
-                    return "FA"; // False Accept (Incorrect selection of NegativeLocation)
-                }
+                if (positiveLocation != 0)
+                    return "M"; // Miss: smell exists but no selection
                 else
-                {
-                    return "M"; // Miss if NegativeLocation is selected in PositiveControl (ContainerType 0)
-                }
-            }
-            else if (containerType == ContainerType.PositiveControl && (selectedLocation == 1 || selectedLocation == 2 || selectedLocation == 3))
-            {
-                return "CR"; // Correct Reject (CR): Any valid PositiveLocation (1, 2, 3) if ContainerType is 0
+                    return "CR"; // Correct Reject: no smell, no selection
             }
 
-            return "M"; // Default to Miss if none of the above conditions are met
+            // Case: dog chose a bin
+            if (positiveLocation != 0)
+            {
+                if (selectedLocation == positiveLocation)
+                    return "H"; // Hit
+                else
+                    return "M"; // Chose wrong bin (not the one with the smell)
+            }
+            else
+            {
+                return "FA"; // False Accept: no smell, but dog chose something
+            }
         }
 
         // POST: api/Trial/uploadVideo/{trialId}

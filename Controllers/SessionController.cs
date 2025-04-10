@@ -98,8 +98,30 @@ namespace MyFirstMvcApp.Controllers
                 return NotFound();
             }
 
+            // Step 1: Get related training programs
+            var trainingPrograms = await _context.TrainingPrograms
+                .Where(tp => tp.SessionId == id)
+                .ToListAsync();
+
+            var trainingProgramIds = trainingPrograms.Select(tp => tp.Id).ToList();
+
+            // Step 2: Get all trials related to those training programs
+            var trialsToDelete = await _context.Trials
+                .Where(t => trainingProgramIds.Contains(t.TrainingId))
+                .ToListAsync();
+
+            // Step 3: Delete the trials
+            _context.Trials.RemoveRange(trialsToDelete);
+
+            // Step 4: Delete the training programs
+            _context.TrainingPrograms.RemoveRange(trainingPrograms);
+
+            // Step 5: Delete the session itself
             _context.Sessions.Remove(session);
+
+            // Save all changes in one transaction
             await _context.SaveChangesAsync();
+
             return NoContent();
         }
 
